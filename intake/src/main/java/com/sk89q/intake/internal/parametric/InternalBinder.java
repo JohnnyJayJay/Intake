@@ -19,29 +19,29 @@
 
 package com.sk89q.intake.internal.parametric;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.sk89q.intake.parametric.Key;
 import com.sk89q.intake.parametric.binder.Binder;
 import com.sk89q.intake.parametric.binder.BindingBuilder;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 class InternalBinder implements Binder {
 
-    private final BindingList bindings;
+  private final BindingList bindings;
 
-    InternalBinder(BindingList bindings) {
-        checkNotNull(bindings, "bindings");
-        this.bindings = bindings;
-    }
+  InternalBinder(BindingList bindings) {
+    checkNotNull(bindings, "bindings");
+    this.bindings = bindings;
+  }
 
-    @Override
-    public <T> BindingBuilder<T> bind(Class<T> type) {
-        return new InternalBinderBuilder<T>(bindings, Key.get(type));
-    }
+  @Override
+  public <T> BindingBuilder<T> bind(Class<T> type) {
+    return new InternalBinderBuilder<T>(bindings, Key.get(type));
+  }
 
-    @Override
-    public <T> BindingBuilder<T> bind(Key<T> type) {
-        return new InternalBinderBuilder<T>(bindings, type);
-    }
+  @Override
+  public <T> BindingBuilder<T> bind(Key<T> type) {
+    return new InternalBinderBuilder<T>(bindings, type);
+  }
 
 }

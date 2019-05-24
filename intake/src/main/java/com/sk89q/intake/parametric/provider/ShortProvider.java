@@ -21,24 +21,24 @@ package com.sk89q.intake.parametric.provider;
 
 import com.sk89q.intake.argument.ArgumentException;
 import com.sk89q.intake.argument.CommandArgs;
-
 import java.lang.annotation.Annotation;
 import java.util.List;
 
 class ShortProvider extends NumberProvider<Short> {
 
-    static final ShortProvider INSTANCE = new ShortProvider();
+  static final ShortProvider INSTANCE = new ShortProvider();
 
-    @Override
-    public Short get(CommandArgs arguments, List<? extends Annotation> modifiers) throws ArgumentException {
-        Double v = parseNumericInput(arguments.next());
-        if (v != null) {
-            short shortValue = v.shortValue();
-            validate(shortValue, modifiers);
-            return shortValue;
-        } else {
-            return null;
-        }
+  @Override
+  public Short get(CommandArgs arguments, List<? extends Annotation> modifiers)
+      throws ArgumentException {
+    Double v = parseNumericInput(arguments.next());
+    if (v != null) {
+      short shortValue = v.shortValue();
+      validate(shortValue, modifiers);
+      return shortValue;
+    } else {
+      return null;
     }
+  }
 
 }

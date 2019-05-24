@@ -21,34 +21,33 @@ package com.sk89q.intake.internal.parametric;
 
 import com.sk89q.intake.argument.CommandArgs;
 import com.sk89q.intake.parametric.Provider;
-
-import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.List;
+import javax.annotation.Nullable;
 
 class ConstantProvider<T> implements Provider<T> {
 
-    private final T value;
+  private final T value;
 
-    public ConstantProvider(T value) {
-        this.value = value;
-    }
+  public ConstantProvider(T value) {
+    this.value = value;
+  }
 
-    @Override
-    public boolean isProvided() {
-        return true;
-    }
+  @Override
+  public boolean isProvided() {
+    return true;
+  }
 
-    @Nullable
-    @Override
-    public T get(CommandArgs arguments, List<? extends Annotation> modifiers) {
-        return value;
-    }
+  @Nullable
+  @Override
+  public T get(CommandArgs arguments, List<? extends Annotation> modifiers) {
+    return value;
+  }
 
-    @Override
-    public List<String> getSuggestions(String prefix) {
-        return Collections.emptyList();
-    }
+  @Override
+  public List<String> getSuggestions(String prefix) {
+    return Collections.emptyList();
+  }
 
 }

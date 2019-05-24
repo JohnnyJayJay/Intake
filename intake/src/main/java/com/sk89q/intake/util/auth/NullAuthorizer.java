@@ -22,14 +22,13 @@ package com.sk89q.intake.util.auth;
 import com.sk89q.intake.argument.Namespace;
 
 /**
- * An implementation of {@link Authorizer} that always returns false for
- * tests of permissions.
+ * An implementation of {@link Authorizer} that always returns false for tests of permissions.
  */
 public class NullAuthorizer implements Authorizer {
 
-    @Override
-    public boolean testPermission(Namespace namespace, String permission) {
-        return false;
-    }
+  @Override
+  public boolean testPermission(Namespace namespace, String permission) {
+    return false;
+  }
 
 }

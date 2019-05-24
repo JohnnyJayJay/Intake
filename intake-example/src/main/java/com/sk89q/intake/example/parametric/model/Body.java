@@ -23,36 +23,36 @@ import javax.annotation.Nullable;
 
 public class Body {
 
-    private CelestialType type;
-    private double meanTemperature;
-    @Nullable
-    private String description;
+  private CelestialType type;
+  private double meanTemperature;
+  @Nullable
+  private String description;
 
-    public CelestialType getType() {
-        return type;
-    }
+  public CelestialType getType() {
+    return type;
+  }
 
-    public Body setType(CelestialType type) {
-        this.type = type;
-        return this;
-    }
+  public Body setType(CelestialType type) {
+    this.type = type;
+    return this;
+  }
 
-    public double getMeanTemperature() {
-        return meanTemperature;
-    }
+  public double getMeanTemperature() {
+    return meanTemperature;
+  }
 
-    public Body setMeanTemperature(double meanTemperature) {
-        this.meanTemperature = meanTemperature;
-        return this;
-    }
+  public Body setMeanTemperature(double meanTemperature) {
+    this.meanTemperature = meanTemperature;
+    return this;
+  }
 
-    @Nullable
-    public String getDescription() {
-        return description;
-    }
+  @Nullable
+  public String getDescription() {
+    return description;
+  }
 
-    public void setDescription(@Nullable String description) {
-        this.description = description;
-    }
+  public void setDescription(@Nullable String description) {
+    this.description = description;
+  }
 
 }

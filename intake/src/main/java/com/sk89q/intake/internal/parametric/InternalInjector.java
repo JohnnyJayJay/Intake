@@ -19,69 +19,75 @@
 
 package com.sk89q.intake.internal.parametric;
 
-import com.sk89q.intake.argument.ArgumentException;
-import com.sk89q.intake.parametric.*;
-import com.sk89q.intake.argument.CommandArgs;
-import com.sk89q.intake.parametric.provider.DefaultModule;
+import static com.google.common.base.Preconditions.checkNotNull;
 
-import javax.annotation.Nullable;
+import com.sk89q.intake.argument.ArgumentException;
+import com.sk89q.intake.argument.CommandArgs;
+import com.sk89q.intake.parametric.Binding;
+import com.sk89q.intake.parametric.Injector;
+import com.sk89q.intake.parametric.Key;
+import com.sk89q.intake.parametric.Module;
+import com.sk89q.intake.parametric.Provider;
+import com.sk89q.intake.parametric.ProvisionException;
+import com.sk89q.intake.parametric.provider.DefaultModule;
 import java.lang.annotation.Annotation;
 import java.util.List;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import javax.annotation.Nullable;
 
 public class InternalInjector implements Injector {
 
-    private final BindingList bindings = new BindingList();
+  private final BindingList bindings = new BindingList();
 
-    public InternalInjector() {
-        install(new DefaultModule());
-    }
+  public InternalInjector() {
+    install(new DefaultModule());
+  }
 
-    @Override
-    public void install(Module module) {
-        checkNotNull(module, "module");
-        module.configure(new InternalBinder(bindings));
-    }
+  @Override
+  public void install(Module module) {
+    checkNotNull(module, "module");
+    module.configure(new InternalBinder(bindings));
+  }
 
-    @Override
-    @Nullable
-    public <T> Binding<T> getBinding(Key<T> key) {
-        return bindings.getBinding(key);
-    }
+  @Override
+  @Nullable
+  public <T> Binding<T> getBinding(Key<T> key) {
+    return bindings.getBinding(key);
+  }
 
-    @Override
-    @Nullable
-    public <T> Binding<T> getBinding(Class<T> type) {
-        return getBinding(Key.get(type));
-    }
+  @Override
+  @Nullable
+  public <T> Binding<T> getBinding(Class<T> type) {
+    return getBinding(Key.get(type));
+  }
 
-    @Override
-    @Nullable
-    public <T> Provider<T> getProvider(Key<T> key) {
-        Binding<T> binding = getBinding(key);
-        return binding != null ? binding.getProvider() : null;
-    }
+  @Override
+  @Nullable
+  public <T> Provider<T> getProvider(Key<T> key) {
+    Binding<T> binding = getBinding(key);
+    return binding != null ? binding.getProvider() : null;
+  }
 
-    @Override
-    @Nullable
-    public <T> Provider<T> getProvider(Class<T> type) {
-        return getProvider(Key.get(type));
-    }
+  @Override
+  @Nullable
+  public <T> Provider<T> getProvider(Class<T> type) {
+    return getProvider(Key.get(type));
+  }
 
-    @Override
-    public <T> T getInstance(Key<T> key, CommandArgs arguments, List<? extends Annotation> modifiers) throws ArgumentException, ProvisionException {
-        Provider<T> provider = getProvider(key);
-        if (provider != null) {
-            return provider.get(arguments, modifiers);
-        } else {
-            throw new ProvisionException("No binding was found for " + key);
-        }
+  @Override
+  public <T> T getInstance(Key<T> key, CommandArgs arguments, List<? extends Annotation> modifiers)
+      throws ArgumentException, ProvisionException {
+    Provider<T> provider = getProvider(key);
+    if (provider != null) {
+      return provider.get(arguments, modifiers);
+    } else {
+      throw new ProvisionException("No binding was found for " + key);
     }
+  }
 
-    @Override
-    public <T> T getInstance(Class<T> type, CommandArgs arguments, List<? extends Annotation> modifiers) throws ArgumentException, ProvisionException {
-        return getInstance(Key.get(type), arguments, modifiers);
-    }
+  @Override
+  public <T> T getInstance(Class<T> type, CommandArgs arguments,
+      List<? extends Annotation> modifiers) throws ArgumentException, ProvisionException {
+    return getInstance(Key.get(type), arguments, modifiers);
+  }
 
 }

@@ -29,55 +29,55 @@ import com.sk89q.intake.parametric.annotation.Text;
 
 public class UniverseCommands {
 
-    private static double fahrenheitToCelsius(double temp) {
-        return (temp -  32) * 5.0 / 9.0;
-    }
+  private static double fahrenheitToCelsius(double temp) {
+    return (temp - 32) * 5.0 / 9.0;
+  }
 
-    private static double celsiusToFahrenheit(double temp) {
-        return temp * 9.0 / 5.0 + 32;
-    }
+  private static double celsiusToFahrenheit(double temp) {
+    return temp * 9.0 / 5.0 + 32;
+  }
 
-    @Command(aliases = "settype", desc = "Set the type of an object")
-    @Require("body.settype")
-    public void setType(Body body, CelestialType type) {
-        body.setType(type);
-    }
+  @Command(aliases = "settype", desc = "Set the type of an object")
+  @Require("body.settype")
+  public void setType(Body body, CelestialType type) {
+    body.setType(type);
+  }
 
-    @Command(aliases = "settemp", desc = "Set the mean temperature of an object")
-    @Require("body.settemp")
-    public void setTemp(Body body, double meanTemp, @Switch('f') boolean inFahrenheit) {
-        if (inFahrenheit) {
-            meanTemp = fahrenheitToCelsius(meanTemp);
-        }
-        body.setMeanTemperature(meanTemp);
+  @Command(aliases = "settemp", desc = "Set the mean temperature of an object")
+  @Require("body.settemp")
+  public void setTemp(Body body, double meanTemp, @Switch('f') boolean inFahrenheit) {
+    if (inFahrenheit) {
+      meanTemp = fahrenheitToCelsius(meanTemp);
     }
+    body.setMeanTemperature(meanTemp);
+  }
 
-    @Command(aliases = "setdesc", desc = "Set the description of an object")
-    @Require("body.setdesc")
-    public void setDesc(Body body, @Text String desc) {
-        // @Text is a classifier that overrides the normal String provider
-        // This @Text provider uses up the rest of the arguments
-        body.setDescription(desc);
-    }
+  @Command(aliases = "setdesc", desc = "Set the description of an object")
+  @Require("body.setdesc")
+  public void setDesc(Body body, @Text String desc) {
+    // @Text is a classifier that overrides the normal String provider
+    // This @Text provider uses up the rest of the arguments
+    body.setDescription(desc);
+  }
 
-    @Command(aliases = "info", desc = "Show information about an object")
-    @Require("body.info")
-    public void info(Body body, @Switch('f') boolean inFahrenheit) {
-        System.out.println("type: " + body.getType());
-        if (inFahrenheit) {
-            System.out.println("mean temp: " + celsiusToFahrenheit(body.getMeanTemperature()) + " deg F");
-        } else {
-            System.out.println("mean temp: " + body.getMeanTemperature() + " deg C");
-        }
-        if (body.getDescription() != null) {
-            System.out.println("desc: " + body.getDescription());
-        }
+  @Command(aliases = "info", desc = "Show information about an object")
+  @Require("body.info")
+  public void info(Body body, @Switch('f') boolean inFahrenheit) {
+    System.out.println("type: " + body.getType());
+    if (inFahrenheit) {
+      System.out.println("mean temp: " + celsiusToFahrenheit(body.getMeanTemperature()) + " deg F");
+    } else {
+      System.out.println("mean temp: " + body.getMeanTemperature() + " deg C");
     }
+    if (body.getDescription() != null) {
+      System.out.println("desc: " + body.getDescription());
+    }
+  }
 
-    @Command(aliases = "delete", desc = "Delete a celestial body")
-    @Require("body.deathstar")
-    public void delete(Universe universe, String name) {
-        universe.remove(name);
-    }
+  @Command(aliases = "delete", desc = "Delete a celestial body")
+  @Require("body.deathstar")
+  public void delete(Universe universe, String name) {
+    universe.remove(name);
+  }
 
 }

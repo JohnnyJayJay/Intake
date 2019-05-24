@@ -20,21 +20,20 @@
 package com.sk89q.intake.example.sender;
 
 import com.sk89q.intake.parametric.AbstractModule;
-
 import java.util.Map;
 
 public class SenderModule extends AbstractModule {
 
-    private final Map<String, User> users;
+  private final Map<String, User> users;
 
-    public SenderModule(Map<String, User> users) {
-        this.users = users;
-    }
+  public SenderModule(Map<String, User> users) {
+    this.users = users;
+  }
 
-    @Override
-    protected void configure() {
-        bind(User.class).annotatedWith(Sender.class).toProvider(new SenderProvider());
-        bind(User.class).toProvider(new UserProvider(users));
-    }
+  @Override
+  protected void configure() {
+    bind(User.class).annotatedWith(Sender.class).toProvider(new SenderProvider());
+    bind(User.class).toProvider(new UserProvider(users));
+  }
 
 }

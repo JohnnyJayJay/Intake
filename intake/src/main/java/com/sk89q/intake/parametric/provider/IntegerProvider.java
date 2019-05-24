@@ -21,24 +21,24 @@ package com.sk89q.intake.parametric.provider;
 
 import com.sk89q.intake.argument.ArgumentException;
 import com.sk89q.intake.argument.CommandArgs;
-
 import java.lang.annotation.Annotation;
 import java.util.List;
 
 class IntegerProvider extends NumberProvider<Integer> {
 
-    static final IntegerProvider INSTANCE = new IntegerProvider();
+  static final IntegerProvider INSTANCE = new IntegerProvider();
 
-    @Override
-    public Integer get(CommandArgs arguments, List<? extends Annotation> modifiers) throws ArgumentException {
-        Double v = parseNumericInput(arguments.next());
-        if (v != null) {
-            int intValue = v.intValue();
-            validate(intValue, modifiers);
-            return intValue;
-        } else {
-            return null;
-        }
+  @Override
+  public Integer get(CommandArgs arguments, List<? extends Annotation> modifiers)
+      throws ArgumentException {
+    Double v = parseNumericInput(arguments.next());
+    if (v != null) {
+      int intValue = v.intValue();
+      validate(intValue, modifiers);
+      return intValue;
+    } else {
+      return null;
     }
+  }
 
 }

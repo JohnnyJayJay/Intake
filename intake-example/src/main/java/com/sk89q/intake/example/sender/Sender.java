@@ -20,7 +20,6 @@
 package com.sk89q.intake.example.sender;
 
 import com.sk89q.intake.parametric.annotation.Classifier;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 

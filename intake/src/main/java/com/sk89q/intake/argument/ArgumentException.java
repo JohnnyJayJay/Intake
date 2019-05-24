@@ -20,9 +20,8 @@
 package com.sk89q.intake.argument;
 
 /**
- * Argument exceptions occur when there is a problem with user-provided
- * arguments, whether it be because of incorrect arguments, missing arguments,
- * or excess arguments.
+ * Argument exceptions occur when there is a problem with user-provided arguments, whether it be
+ * because of incorrect arguments, missing arguments, or excess arguments.
  *
  * @see ArgumentParseException
  * @see MissingArgumentException
@@ -30,20 +29,20 @@ package com.sk89q.intake.argument;
  */
 public class ArgumentException extends Exception {
 
-    protected ArgumentException() {
-        super();
-    }
+  protected ArgumentException() {
+    super();
+  }
 
-    protected ArgumentException(String message) {
-        super(message);
-    }
+  protected ArgumentException(String message) {
+    super(message);
+  }
 
-    protected ArgumentException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  protected ArgumentException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-    protected ArgumentException(Throwable cause) {
-        super(cause);
-    }
+  protected ArgumentException(Throwable cause) {
+    super(cause);
+  }
 
 }

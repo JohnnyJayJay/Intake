@@ -23,6 +23,6 @@ import com.sk89q.intake.parametric.binder.Binder;
 
 public interface Module {
 
-    void configure(Binder binder);
+  void configure(Binder binder);
 
 }

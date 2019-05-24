@@ -24,32 +24,32 @@ package com.sk89q.intake;
  */
 public interface CommandMapping {
 
-    /**
-     * Get the primary alias.
-     *
-     * @return The primary alias
-     */
-    String getPrimaryAlias();
+  /**
+   * Get the primary alias.
+   *
+   * @return The primary alias
+   */
+  String getPrimaryAlias();
 
-    /**
-     * Get a list of all aliases.
-     *
-     * @return Aliases
-     */
-    String[] getAllAliases();
+  /**
+   * Get a list of all aliases.
+   *
+   * @return Aliases
+   */
+  String[] getAllAliases();
 
-    /**
-     * Get the callable
-     *
-     * @return The callable
-     */
-    CommandCallable getCallable();
+  /**
+   * Get the callable.
+   *
+   * @return The callable
+   */
+  CommandCallable getCallable();
 
-    /**
-     * Get the {@link Description} form the callable.
-     *
-     * @return The description
-     */
-    Description getDescription();
+  /**
+   * Get the {@link Description} form the callable.
+   *
+   * @return The description
+   */
+  Description getDescription();
 
 }

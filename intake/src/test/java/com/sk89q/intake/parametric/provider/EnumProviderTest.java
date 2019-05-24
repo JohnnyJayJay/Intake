@@ -19,50 +19,52 @@
 
 package com.sk89q.intake.parametric.provider;
 
-import com.google.common.collect.ImmutableList;
-import com.sk89q.intake.argument.ArgumentParseException;
-import com.sk89q.intake.argument.Arguments;
-import org.hamcrest.Matchers;
-import org.junit.Test;
-
-import java.lang.annotation.Annotation;
-
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import com.google.common.collect.ImmutableList;
+import com.sk89q.intake.argument.ArgumentParseException;
+import com.sk89q.intake.argument.Arguments;
+import java.lang.annotation.Annotation;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
 public class EnumProviderTest {
 
-    private final EnumProvider<Size> provider = new EnumProvider<Size>(Size.class);
+  private final EnumProvider<Size> provider = new EnumProvider<Size>(Size.class);
 
-    @Test
-    public void testGet() throws Exception {
-        assertThat(provider.get(Arguments.of("small"), ImmutableList.<Annotation>of()), is(Size.SMALL));
-        assertThat(provider.get(Arguments.of("verylarge"), ImmutableList.<Annotation>of()), is(Size.VERY_LARGE));
-        assertThat(provider.get(Arguments.of("very_large"), ImmutableList.<Annotation>of()), is(Size.VERY_LARGE));
-    }
+  @Test
+  public void testGet() throws Exception {
+    assertThat(provider.get(Arguments.of("small"), ImmutableList.<Annotation>of()), is(Size.SMALL));
+    assertThat(provider.get(Arguments.of("verylarge"), ImmutableList.<Annotation>of()),
+        is(Size.VERY_LARGE));
+    assertThat(provider.get(Arguments.of("very_large"), ImmutableList.<Annotation>of()),
+        is(Size.VERY_LARGE));
+  }
 
-    @Test(expected = ArgumentParseException.class)
-    public void testGetMissing() throws Exception {
-        provider.get(Arguments.of("tiny"), ImmutableList.<Annotation>of());
-    }
+  @Test(expected = ArgumentParseException.class)
+  public void testGetMissing() throws Exception {
+    provider.get(Arguments.of("tiny"), ImmutableList.<Annotation>of());
+  }
 
-    @Test
-    public void testGetSuggestions() throws Exception {
-        assertThat(provider.getSuggestions(""), containsInAnyOrder("small", "medium", "large", "very_large"));
-        assertThat(provider.getSuggestions("s"), containsInAnyOrder("small"));
-        assertThat(provider.getSuggestions("la"), containsInAnyOrder("large"));
-        assertThat(provider.getSuggestions("very"), containsInAnyOrder("very_large"));
-        assertThat(provider.getSuggestions("verylarg"), containsInAnyOrder("very_large"));
-        assertThat(provider.getSuggestions("very_"), containsInAnyOrder("very_large"));
-        assertThat(provider.getSuggestions("tiny"), Matchers.<String>empty());
-    }
+  @Test
+  public void testGetSuggestions() throws Exception {
+    assertThat(provider.getSuggestions(""),
+        containsInAnyOrder("small", "medium", "large", "very_large"));
+    assertThat(provider.getSuggestions("s"), containsInAnyOrder("small"));
+    assertThat(provider.getSuggestions("la"), containsInAnyOrder("large"));
+    assertThat(provider.getSuggestions("very"), containsInAnyOrder("very_large"));
+    assertThat(provider.getSuggestions("verylarg"), containsInAnyOrder("very_large"));
+    assertThat(provider.getSuggestions("very_"), containsInAnyOrder("very_large"));
+    assertThat(provider.getSuggestions("tiny"), Matchers.<String>empty());
+  }
 
-    enum Size {
-        SMALL,
-        MEDIUM,
-        LARGE,
-        VERY_LARGE
-    }
+  enum Size {
+    SMALL,
+    MEDIUM,
+    LARGE,
+    VERY_LARGE
+  }
 
 }

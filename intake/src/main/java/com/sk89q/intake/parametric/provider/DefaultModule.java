@@ -27,9 +27,9 @@ import com.sk89q.intake.parametric.AbstractModule;
  */
 public class DefaultModule extends AbstractModule {
 
-    @Override
-    protected void configure() {
-        bind(CommandArgs.class).toProvider(new CommandArgsProvider());
-    }
+  @Override
+  protected void configure() {
+    bind(CommandArgs.class).toProvider(new CommandArgsProvider());
+  }
 
 }

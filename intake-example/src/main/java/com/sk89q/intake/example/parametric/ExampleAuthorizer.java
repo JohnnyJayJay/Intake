@@ -19,16 +19,16 @@
 
 package com.sk89q.intake.example.parametric;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.sk89q.intake.argument.Namespace;
 import com.sk89q.intake.util.auth.Authorizer;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 public class ExampleAuthorizer implements Authorizer {
 
-    @Override
-    public boolean testPermission(Namespace namespace, String permission) {
-        return checkNotNull(namespace.get(Subject.class), "Current user not available").may(permission);
-    }
+  @Override
+  public boolean testPermission(Namespace namespace, String permission) {
+    return checkNotNull(namespace.get(Subject.class), "Current user not available").may(permission);
+  }
 
 }

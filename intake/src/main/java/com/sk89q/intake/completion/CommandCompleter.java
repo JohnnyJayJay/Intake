@@ -21,7 +21,6 @@ package com.sk89q.intake.completion;
 
 import com.sk89q.intake.CommandException;
 import com.sk89q.intake.argument.Namespace;
-
 import java.util.List;
 
 /**
@@ -29,14 +28,14 @@ import java.util.List;
  */
 public interface CommandCompleter {
 
-    /**
-     * Get a list of suggestions based on input.
-     *
-     * @param arguments the arguments entered up to this point
-     * @param locals the locals
-     * @return a list of suggestions
-     * @throws CommandException thrown if there was a parsing error
-     */
-    List<String> getSuggestions(String arguments, Namespace locals) throws CommandException;
+  /**
+   * Get a list of suggestions based on input.
+   *
+   * @param arguments the arguments entered up to this point
+   * @param locals the locals
+   * @return a list of suggestions
+   * @throws CommandException thrown if there was a parsing error
+   */
+  List<String> getSuggestions(String arguments, Namespace locals) throws CommandException;
 
 }

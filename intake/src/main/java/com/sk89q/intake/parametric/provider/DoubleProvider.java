@@ -21,23 +21,23 @@ package com.sk89q.intake.parametric.provider;
 
 import com.sk89q.intake.argument.ArgumentException;
 import com.sk89q.intake.argument.CommandArgs;
-
 import java.lang.annotation.Annotation;
 import java.util.List;
 
 class DoubleProvider extends NumberProvider<Double> {
 
-    static final DoubleProvider INSTANCE = new DoubleProvider();
+  static final DoubleProvider INSTANCE = new DoubleProvider();
 
-    @Override
-    public Double get(CommandArgs arguments, List<? extends Annotation> modifiers) throws ArgumentException {
-        Double v = parseNumericInput(arguments.next());
-        if (v != null) {
-            validate(v, modifiers);
-            return v;
-        } else {
-            return null;
-        }
+  @Override
+  public Double get(CommandArgs arguments, List<? extends Annotation> modifiers)
+      throws ArgumentException {
+    Double v = parseNumericInput(arguments.next());
+    if (v != null) {
+      validate(v, modifiers);
+      return v;
+    } else {
+      return null;
     }
+  }
 
 }

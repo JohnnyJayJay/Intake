@@ -21,17 +21,17 @@ package com.sk89q.intake.parametric.handler;
 
 import com.sk89q.intake.ImmutableDescription.Builder;
 import com.sk89q.intake.parametric.ArgumentParser;
-
 import java.lang.annotation.Annotation;
 import java.util.Set;
 
 /**
- * An abstract implementation of {@link InvokeListener} with some
- * no-operation methods implemented to assist in creating subclasses.
+ * An abstract implementation of {@link InvokeListener} with some no-operation methods implemented
+ * to assist in creating subclasses.
  */
 public abstract class AbstractInvokeListener implements InvokeListener {
 
-    @Override
-    public void updateDescription(Set<Annotation> annotations, ArgumentParser parser, Builder descriptionBuilder) {
-    }
+  @Override
+  public void updateDescription(Set<Annotation> annotations, ArgumentParser parser,
+      Builder descriptionBuilder) {
+  }
 }

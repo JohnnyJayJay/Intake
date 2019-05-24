@@ -21,18 +21,18 @@ package com.sk89q.intake.example.sender;
 
 public class User {
 
-    private final String name;
+  private final String name;
 
-    public User(String name) {
-        this.name = name;
-    }
+  public User(String name) {
+    this.name = name;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void message(String message) {
-        System.out.println("to " + getName() + ": " + message);
-    }
+  public void message(String message) {
+    System.out.println("to " + getName() + ": " + message);
+  }
 
 }

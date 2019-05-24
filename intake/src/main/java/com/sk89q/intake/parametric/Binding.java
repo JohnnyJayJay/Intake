@@ -26,18 +26,18 @@ package com.sk89q.intake.parametric;
  */
 public interface Binding<T> {
 
-    /**
-     * Get the key representing the type.
-     *
-     * @return The key
-     */
-    Key<T> getKey();
+  /**
+   * Get the key representing the type.
+   *
+   * @return The key
+   */
+  Key<T> getKey();
 
-    /**
-     * Get the provider
-     *
-     * @return The provider
-     */
-    Provider<T> getProvider();
+  /**
+   * Get the provider.
+   *
+   * @return The provider
+   */
+  Provider<T> getProvider();
 
 }

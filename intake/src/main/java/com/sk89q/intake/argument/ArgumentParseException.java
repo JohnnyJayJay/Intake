@@ -20,7 +20,6 @@
 package com.sk89q.intake.argument;
 
 import com.sk89q.intake.Parameter;
-
 import javax.annotation.Nullable;
 
 /**
@@ -28,32 +27,32 @@ import javax.annotation.Nullable;
  */
 public class ArgumentParseException extends ArgumentException {
 
-    @Nullable
-    private final Parameter parameter;
+  @Nullable
+  private final Parameter parameter;
 
-    public ArgumentParseException(String message) {
-        super(message);
-        this.parameter = null;
-    }
+  public ArgumentParseException(String message) {
+    super(message);
+    this.parameter = null;
+  }
 
-    public ArgumentParseException(String message, @Nullable Parameter parameter) {
-        super(message);
-        this.parameter = parameter;
-    }
+  public ArgumentParseException(String message, @Nullable Parameter parameter) {
+    super(message);
+    this.parameter = parameter;
+  }
 
-    public ArgumentParseException(String message, Throwable cause) {
-        super(message, cause);
-        this.parameter = null;
-    }
+  public ArgumentParseException(String message, Throwable cause) {
+    super(message, cause);
+    this.parameter = null;
+  }
 
-    public ArgumentParseException(String message, Throwable cause, @Nullable Parameter parameter) {
-        super(message, cause);
-        this.parameter = parameter;
-    }
+  public ArgumentParseException(String message, Throwable cause, @Nullable Parameter parameter) {
+    super(message, cause);
+    this.parameter = parameter;
+  }
 
-    @Nullable
-    public Parameter getParameter() {
-        return parameter;
-    }
+  @Nullable
+  public Parameter getParameter() {
+    return parameter;
+  }
 
 }

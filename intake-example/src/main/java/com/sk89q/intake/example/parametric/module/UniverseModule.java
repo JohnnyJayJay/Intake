@@ -27,17 +27,17 @@ import com.sk89q.intake.parametric.provider.EnumProvider;
 
 public class UniverseModule extends AbstractModule {
 
-    private final Universe universe;
+  private final Universe universe;
 
-    public UniverseModule(Universe universe) {
-        this.universe = universe;
-    }
+  public UniverseModule(Universe universe) {
+    this.universe = universe;
+  }
 
-    @Override
-    protected void configure() {
-        bind(Universe.class).toInstance(universe);
-        bind(Body.class).toProvider(new BodyProvider(universe));
-        bind(CelestialType.class).toProvider(new EnumProvider<CelestialType>(CelestialType.class));
-    }
+  @Override
+  protected void configure() {
+    bind(Universe.class).toInstance(universe);
+    bind(Body.class).toProvider(new BodyProvider(universe));
+    bind(CelestialType.class).toProvider(new EnumProvider<CelestialType>(CelestialType.class));
+  }
 
 }

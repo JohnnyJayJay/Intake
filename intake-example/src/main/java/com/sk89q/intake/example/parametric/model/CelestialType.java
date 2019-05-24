@@ -21,12 +21,12 @@ package com.sk89q.intake.example.parametric.model;
 
 public enum CelestialType {
 
-    PLANET,
-    DWARF_PLANET,
-    ASTEROID,
-    COMET,
-    METEOROID,
-    STAR,
-    BROWN_DWARF
+  PLANET,
+  DWARF_PLANET,
+  ASTEROID,
+  COMET,
+  METEOROID,
+  STAR,
+  BROWN_DWARF
 
 }

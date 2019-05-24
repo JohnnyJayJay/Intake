@@ -31,54 +31,54 @@ import com.sk89q.intake.dispatcher.SimpleDispatcher;
 import com.sk89q.intake.parametric.Injector;
 import com.sk89q.intake.parametric.ParametricBuilder;
 import com.sk89q.intake.util.auth.AuthorizationException;
-
 import java.util.Map;
 import java.util.logging.Logger;
 
 public final class SenderExample {
 
-    private static final Logger log  = Logger.getLogger(SenderExample.class.getCanonicalName());
+  private static final Logger log = Logger.getLogger(SenderExample.class.getCanonicalName());
 
-    private SenderExample() {
-    }
+  private SenderExample() {
+  }
 
-    public static void main(String[] args) throws AuthorizationException, InvocationCommandException, CommandException {
-        Map<String, User> users = new ImmutableMap.Builder<String, User>()
-                .put("aaron", new User("Aaron"))
-                .put("michelle", new User("Michelle"))
-                .build();
+  public static void main(String[] args)
+      throws AuthorizationException, InvocationCommandException, CommandException {
+    Map<String, User> users = new ImmutableMap.Builder<String, User>()
+        .put("aaron", new User("Aaron"))
+        .put("michelle", new User("Michelle"))
+        .build();
 
-        Namespace namespace = new Namespace();
-        namespace.put("sender", users.get("aaron")); // Our sender
+    Namespace namespace = new Namespace();
+    namespace.put("sender", users.get("aaron")); // Our sender
 
-        Injector injector = Intake.createInjector();
-        injector.install(new SenderModule(users));
+    Injector injector = Intake.createInjector();
+    injector.install(new SenderModule(users));
 
-        ParametricBuilder builder = new ParametricBuilder(injector);
+    ParametricBuilder builder = new ParametricBuilder(injector);
 
-        Dispatcher dispatcher = new SimpleDispatcher();
-        builder.registerMethodsAsCommands(dispatcher, new SenderExample());
+    Dispatcher dispatcher = new SimpleDispatcher();
+    builder.registerMethodsAsCommands(dispatcher, new SenderExample());
 
-        dispatcher.call("greet", namespace, ImmutableList.<String>of());
-        dispatcher.call("privmsg aaron", namespace, ImmutableList.<String>of());
-        dispatcher.call("privmsg michelle", namespace, ImmutableList.<String>of());
-        dispatcher.call("poke aaron", namespace, ImmutableList.<String>of());
-        dispatcher.call("poke michelle", namespace, ImmutableList.<String>of());
-    }
+    dispatcher.call("greet", namespace, ImmutableList.<String>of());
+    dispatcher.call("privmsg aaron", namespace, ImmutableList.<String>of());
+    dispatcher.call("privmsg michelle", namespace, ImmutableList.<String>of());
+    dispatcher.call("poke aaron", namespace, ImmutableList.<String>of());
+    dispatcher.call("poke michelle", namespace, ImmutableList.<String>of());
+  }
 
-    @Command(aliases = "greet", desc = "Greet the sender")
-    public void greet(@Sender User user) {
-        user.message("Hi!");
-    }
+  @Command(aliases = "greet", desc = "Greet the sender")
+  public void greet(@Sender User user) {
+    user.message("Hi!");
+  }
 
-    @Command(aliases = "privmsg", desc = "Send a message to someone")
-    public void privMsg(@Sender User user, User target) {
-        target.message("Hi from " + user.getName());
-    }
+  @Command(aliases = "privmsg", desc = "Send a message to someone")
+  public void privMsg(@Sender User user, User target) {
+    target.message("Hi from " + user.getName());
+  }
 
-    @Command(aliases = "poke", desc = "Poke someone anonymously")
-    public void poke(User target) {
-        target.message("You've been poked!");
-    }
+  @Command(aliases = "poke", desc = "Poke someone anonymously")
+  public void poke(User target) {
+    target.message("You've been poked!");
+  }
 
 }

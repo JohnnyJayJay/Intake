@@ -24,33 +24,33 @@ import com.sk89q.intake.argument.ArgumentException;
 import com.sk89q.intake.argument.CommandArgs;
 import com.sk89q.intake.parametric.Provider;
 import com.sk89q.intake.parametric.ProvisionException;
-
-import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.util.List;
+import javax.annotation.Nullable;
 
 class CommandArgsProvider implements Provider<CommandArgs> {
 
-    @Override
-    public boolean isProvided() {
-        return true;
-    }
+  @Override
+  public boolean isProvided() {
+    return true;
+  }
 
-    @Nullable
-    @Override
-    public CommandArgs get(CommandArgs arguments, List<? extends Annotation> modifiers) throws ArgumentException, ProvisionException {
-        CommandArgs commandArgs = arguments.getNamespace().get(CommandArgs.class);
-        if (commandArgs != null) {
-            commandArgs.markConsumed();
-            return commandArgs;
-        } else {
-            throw new ProvisionException("CommandArgs object not found in Namespace");
-        }
+  @Nullable
+  @Override
+  public CommandArgs get(CommandArgs arguments, List<? extends Annotation> modifiers)
+      throws ArgumentException, ProvisionException {
+    CommandArgs commandArgs = arguments.getNamespace().get(CommandArgs.class);
+    if (commandArgs != null) {
+      commandArgs.markConsumed();
+      return commandArgs;
+    } else {
+      throw new ProvisionException("CommandArgs object not found in Namespace");
     }
+  }
 
-    @Override
-    public List<String> getSuggestions(String prefix) {
-        return ImmutableList.of();
-    }
+  @Override
+  public List<String> getSuggestions(String prefix) {
+    return ImmutableList.of();
+  }
 
 }

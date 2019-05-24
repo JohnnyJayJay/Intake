@@ -25,39 +25,39 @@ import com.sk89q.intake.argument.ArgumentParseException;
 import com.sk89q.intake.argument.CommandArgs;
 import com.sk89q.intake.parametric.Provider;
 import com.sk89q.intake.parametric.ProvisionException;
-
-import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.Nullable;
 
 public class UserProvider implements Provider<User> {
 
-    private final Map<String, User> users;
+  private final Map<String, User> users;
 
-    public UserProvider(Map<String, User> users) {
-        this.users = users;
-    }
+  public UserProvider(Map<String, User> users) {
+    this.users = users;
+  }
 
-    @Override
-    public boolean isProvided() {
-        return false;
-    }
+  @Override
+  public boolean isProvided() {
+    return false;
+  }
 
-    @Nullable
-    @Override
-    public User get(CommandArgs arguments, List<? extends Annotation> modifiers) throws ArgumentException, ProvisionException {
-        String name = arguments.next();
-        User user = users.get(name);
-        if (user == null) {
-            throw new ArgumentParseException("Couldn't find a user by the name '" + name + "'");
-        }
-        return user;
+  @Nullable
+  @Override
+  public User get(CommandArgs arguments, List<? extends Annotation> modifiers)
+      throws ArgumentException, ProvisionException {
+    String name = arguments.next();
+    User user = users.get(name);
+    if (user == null) {
+      throw new ArgumentParseException("Couldn't find a user by the name '" + name + "'");
     }
+    return user;
+  }
 
-    @Override
-    public List<String> getSuggestions(String prefix) {
-        return ImmutableList.of();
-    }
+  @Override
+  public List<String> getSuggestions(String prefix) {
+    return ImmutableList.of();
+  }
 
 }

@@ -22,44 +22,43 @@ package com.sk89q.intake.example.parametric.model;
 import com.google.common.collect.ImmutableBiMap.Builder;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-
-import javax.annotation.Nullable;
 import java.util.Map;
+import javax.annotation.Nullable;
 
 public class Universe {
 
-    private final Map<String, Body> bodies = Maps.newHashMap();
+  private final Map<String, Body> bodies = Maps.newHashMap();
 
-    public void put(String name, Body body) {
-        bodies.put(name, body);
+  public void put(String name, Body body) {
+    bodies.put(name, body);
+  }
+
+  @Nullable
+  public Body get(String name) {
+    Body body = bodies.get(name);
+    if (body == null) {
+      throw new IllegalArgumentException("Couldn't find body with name '" + name + "'");
     }
 
-    @Nullable
-    public Body get(String name) {
-        Body body = bodies.get(name);
-        if (body == null) {
-            throw new IllegalArgumentException("Couldn't find body with name '" + name + "'");
-        }
+    return body;
+  }
 
-        return body;
-    }
+  public Body getIfPresent(String name) {
+    return bodies.get(name);
+  }
 
-    public Body getIfPresent(String name) {
-        return bodies.get(name);
+  public Map<String, Body> getPrefixedWith(String prefix) {
+    ImmutableMap.Builder<String, Body> matching = new Builder<String, Body>();
+    for (Map.Entry<String, Body> entry : bodies.entrySet()) {
+      if (entry.getKey().startsWith(prefix)) {
+        matching.put(entry);
+      }
     }
+    return matching.build();
+  }
 
-    public Map<String, Body> getPrefixedWith(String prefix) {
-        ImmutableMap.Builder<String, Body> matching = new Builder<String, Body>();
-        for (Map.Entry<String, Body> entry : bodies.entrySet()) {
-            if (entry.getKey().startsWith(prefix)) {
-                matching.put(entry);
-            }
-        }
-        return matching.build();
-    }
-
-    public void remove(String name) {
-        bodies.remove(name);
-    }
+  public void remove(String name) {
+    bodies.remove(name);
+  }
 
 }

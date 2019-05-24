@@ -19,22 +19,25 @@
 
 package com.sk89q.intake;
 
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Annotates a method that requires a permission check to be satisfied before
- * it can be executed by the caller.
+ * Annotates a method that requires a permission check to be satisfied before it can be executed by
+ * the caller.
  */
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Require {
 
-    /**
-     * A list of permissions, evaluated as a union of the permissions to
-     * test whether the caller is permitted to use the command
-     *
-     * @return a list of permissions
-     */
-    String[] value();
+  /**
+   * A list of permissions, evaluated as a union of the permissions to test whether the caller is
+   * permitted to use the command
+   *
+   * @return a list of permissions
+   */
+  String[] value();
 
 }

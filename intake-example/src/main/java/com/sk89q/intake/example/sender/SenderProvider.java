@@ -24,32 +24,32 @@ import com.sk89q.intake.argument.ArgumentException;
 import com.sk89q.intake.argument.CommandArgs;
 import com.sk89q.intake.parametric.Provider;
 import com.sk89q.intake.parametric.ProvisionException;
-
-import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.util.List;
+import javax.annotation.Nullable;
 
 public class SenderProvider implements Provider<User> {
 
-    @Override
-    public boolean isProvided() {
-        return true;
-    }
+  @Override
+  public boolean isProvided() {
+    return true;
+  }
 
-    @Nullable
-    @Override
-    public User get(CommandArgs arguments, List<? extends Annotation> modifiers) throws ArgumentException, ProvisionException {
-        User sender = (User) arguments.getNamespace().get("sender");
-        if (sender != null) {
-            return sender;
-        } else {
-            throw new ProvisionException("Sender was set on Namespace");
-        }
+  @Nullable
+  @Override
+  public User get(CommandArgs arguments, List<? extends Annotation> modifiers)
+      throws ArgumentException, ProvisionException {
+    User sender = (User) arguments.getNamespace().get("sender");
+    if (sender != null) {
+      return sender;
+    } else {
+      throw new ProvisionException("Sender was set on Namespace");
     }
+  }
 
-    @Override
-    public List<String> getSuggestions(String prefix) {
-        return ImmutableList.of();
-    }
+  @Override
+  public List<String> getSuggestions(String prefix) {
+    return ImmutableList.of();
+  }
 
 }

@@ -27,16 +27,16 @@ import com.sk89q.intake.parametric.Injector;
  */
 public final class Intake {
 
-    private Intake() {
-    }
+  private Intake() {
+  }
 
-    /**
-     * Create a new injector.
-     *
-     * @return A new injector
-     */
-    public static Injector createInjector() {
-        return new InternalInjector();
-    }
+  /**
+   * Create a new injector.
+   *
+   * @return A new injector
+   */
+  public static Injector createInjector() {
+    return new InternalInjector();
+  }
 
 }

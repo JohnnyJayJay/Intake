@@ -19,47 +19,48 @@
 
 package com.sk89q.intake.parametric;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assume.assumeThat;
+
 import com.google.common.collect.Sets;
 import com.sk89q.intake.parametric.annotation.Classifier;
 import com.sk89q.intake.parametric.annotation.Text;
-import org.junit.Test;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.TreeSet;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assume.assumeThat;
+import org.junit.Test;
 
 /**
  * Tests correct behaviour of the Key class, currently only focusing on correct collection
  * behaviour.
  */
 public class KeyTest {
-    @Test
-    public void testMultipleClassifiersInTreeSet() {
-        //given
-        Key<String> keyWithoutClassifier = Key.get(String.class);
-        Key<String> keyWithClassifier = Key.get(String.class, Text.class);
-        Key<String> keyWithAnotherClassifier = Key.get(String.class, MyClassifier.class);
-        TreeSet<Key<?>> keySet = Sets.newTreeSet(); //this mimics BindingsList behaviour
-        keySet.add(keyWithoutClassifier);
-        assumeThat(keySet.add(keyWithAnotherClassifier), is(true));
-        //when
-        boolean added = keySet.add(keyWithClassifier);
-        //then
-        assertThat("two keys with different classifiers must be accepted in a single set", added, is(true));
-        assertThat("other classifier must be contained in set",
-                keySet.contains(Key.get(String.class, MyClassifier.class)), is(true));
-    }
 
-    @Classifier
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.PARAMETER)
-    private @interface MyClassifier {
+  @Test
+  public void testMultipleClassifiersInTreeSet() {
+    //given
+    Key<String> keyWithoutClassifier = Key.get(String.class);
+    Key<String> keyWithClassifier = Key.get(String.class, Text.class);
+    Key<String> keyWithAnotherClassifier = Key.get(String.class, MyClassifier.class);
+    TreeSet<Key<?>> keySet = Sets.newTreeSet(); //this mimics BindingsList behaviour
+    keySet.add(keyWithoutClassifier);
+    assumeThat(keySet.add(keyWithAnotherClassifier), is(true));
+    //when
+    boolean added = keySet.add(keyWithClassifier);
+    //then
+    assertThat("two keys with different classifiers must be accepted in a single set", added,
+        is(true));
+    assertThat("other classifier must be contained in set",
+        keySet.contains(Key.get(String.class, MyClassifier.class)), is(true));
+  }
 
-    }
+  @Classifier
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target(ElementType.PARAMETER)
+  private @interface MyClassifier {
+
+  }
 }

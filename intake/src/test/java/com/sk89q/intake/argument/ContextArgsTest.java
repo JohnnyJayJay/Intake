@@ -21,22 +21,21 @@ package com.sk89q.intake.argument;
 
 import com.google.common.collect.Lists;
 import com.sk89q.intake.CommandException;
-
 import java.util.List;
 
 public class ContextArgsTest extends AbstractCommandArgsTest {
 
-    @Override
-    protected CommandArgs createCommandArgs(List<String> args) {
-        try {
-            List<String> newArgs = Lists.newArrayList();
-            newArgs.add("_");
-            newArgs.addAll(args);
-            String[] newArgsArray = new String[newArgs.size()];
-            newArgs.toArray(newArgsArray);
-            return new ContextArgs(new CommandContext(newArgsArray));
-        } catch (CommandException e) {
-            throw new RuntimeException(e);
-        }
+  @Override
+  protected CommandArgs createCommandArgs(List<String> args) {
+    try {
+      List<String> newArgs = Lists.newArrayList();
+      newArgs.add("_");
+      newArgs.addAll(args);
+      String[] newArgsArray = new String[newArgs.size()];
+      newArgs.toArray(newArgsArray);
+      return new ContextArgs(new CommandContext(newArgsArray));
+    } catch (CommandException e) {
+      throw new RuntimeException(e);
     }
+  }
 }

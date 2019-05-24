@@ -30,22 +30,22 @@ import com.sk89q.intake.parametric.Key;
  */
 public interface Binder {
 
-    /**
-     * Start a binding with a class type.
-     *
-     * @param type The class
-     * @param <T> The type of the class
-     * @return The binding builder
-     */
-    <T> BindingBuilder<T> bind(Class<T> type);
+  /**
+   * Start a binding with a class type.
+   *
+   * @param type The class
+   * @param <T> The type of the class
+   * @return The binding builder
+   */
+  <T> BindingBuilder<T> bind(Class<T> type);
 
-    /**
-     * Start a binding with a key.
-     *
-     * @param key The key
-     * @param <T> The type of the key
-     * @return The binding builder
-     */
-    <T> BindingBuilder<T> bind(Key<T> key);
+  /**
+   * Start a binding with a key.
+   *
+   * @param key The key
+   * @param <T> The type of the key
+   * @return The binding builder
+   */
+  <T> BindingBuilder<T> bind(Key<T> key);
 
 }

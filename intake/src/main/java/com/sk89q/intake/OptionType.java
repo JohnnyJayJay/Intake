@@ -19,210 +19,213 @@
 
 package com.sk89q.intake;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.google.common.collect.ImmutableList;
 import com.sk89q.intake.argument.Arguments;
 import com.sk89q.intake.argument.CommandArgs;
-
 import javax.annotation.Nullable;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
- * Defines the type of parameter, whether it is positional, a flag, optional,
- * or required.
+ * Defines the type of parameter, whether it is positional, a flag, optional, or required.
  */
 public abstract class OptionType {
 
-    private static final RequiredPositional REQUIRED_PARAMETER = new RequiredPositional();
-    private static final OptionalPositional OPTIONAL_PARAMETER = new OptionalPositional();
+  private static final RequiredPositional REQUIRED_PARAMETER = new RequiredPositional();
+  private static final OptionalPositional OPTIONAL_PARAMETER = new OptionalPositional();
 
-    private OptionType() {
-    }
+  private OptionType() {
+  }
 
-    /**
-     * Get the flag associated with this parameter.
-     *
-     * @return the flag, or null if there is no flag associated
-     * @see #isValueFlag()
-     */
+  /**
+   * Get the flag associated with this parameter.
+   *
+   * @return the flag, or null if there is no flag associated
+   * @see #isValueFlag()
+   */
+  @Nullable
+  public abstract Character getFlag();
+
+  /**
+   * Return whether the flag is a value flag.
+   *
+   * @return true if the flag is a value flag
+   * @see #getFlag()
+   */
+  public abstract boolean isValueFlag();
+
+  /**
+   * Get whether this parameter is optional.
+   *
+   * @return true if the parameter does not have to be specified
+   */
+  public abstract boolean isOptional();
+
+  /**
+   * Create a new list of command arguments for the given arguments that is appropriate for this
+   * type of parameter.
+   *
+   * <p>For example, if the type of parameter is a value flag,
+   * then the returned arguments object will only have the value flag's value as the argument.</p>
+   *
+   * @param arguments The list of arguments
+   * @return The new list of arguments
+   */
+  public abstract CommandArgs transform(CommandArgs arguments);
+
+  /**
+   * Get the required positional type of parameter.
+   *
+   * @return An option type
+   */
+  public static OptionType positional() {
+    return REQUIRED_PARAMETER;
+  }
+
+  /**
+   * Get the optional positional type of parameter.
+   *
+   * @return An option type
+   */
+  public static OptionType optionalPositional() {
+    return OPTIONAL_PARAMETER;
+  }
+
+  /**
+   * Get the non-value boolean flag type of parameter.
+   *
+   * @param flag The flag character
+   * @return An option type
+   */
+  public static OptionType flag(Character flag) {
+    checkNotNull(flag, "flag");
+    return new BooleanFlag(flag);
+  }
+
+  /**
+   * Get the value flag type of parameter.
+   *
+   * @param flag The flag character
+   * @return An option type
+   */
+  public static OptionType valueFlag(Character flag) {
+    checkNotNull(flag, "flag");
+    return new ValueFlag(flag);
+  }
+
+  private static final class RequiredPositional extends OptionType {
+
     @Nullable
-    public abstract Character getFlag();
-
-    /**
-     * Return whether the flag is a value flag.
-     *
-     * @return true if the flag is a value flag
-     * @see #getFlag()
-     */
-    public abstract boolean isValueFlag();
-
-    /**
-     * Get whether this parameter is optional.
-     *
-     * @return true if the parameter does not have to be specified
-     */
-    public abstract boolean isOptional();
-
-    /**
-     * Create a new list of command arguments for the given arguments that
-     * is appropriate for this type of parameter.
-     *
-     * <p>For example, if the type of parameter is a value flag,
-     * then the returned arguments object will only have the value flag's
-     * value as the argument.</p>
-     *
-     * @param arguments The list of arguments
-     * @return The new list of arguments
-     */
-    public abstract CommandArgs transform(CommandArgs arguments);
-
-    /**
-     * Get the required positional type of parameter.
-     *
-     * @return An option type
-     */
-    public static OptionType positional() {
-        return REQUIRED_PARAMETER;
+    @Override
+    public Character getFlag() {
+      return null;
     }
 
-    /**
-     * Get the optional positional type of parameter.
-     *
-     * @return An option type
-     */
-    public static OptionType optionalPositional() {
-        return OPTIONAL_PARAMETER;
+    @Override
+    public boolean isValueFlag() {
+      return false;
     }
 
-    /**
-     * Get the non-value boolean flag type of parameter.
-     *
-     * @param flag The flag character
-     * @return An option type
-     */
-    public static OptionType flag(Character flag) {
-        checkNotNull(flag, "flag");
-        return new BooleanFlag(flag);
+    @Override
+    public boolean isOptional() {
+      return false;
     }
 
-    /**
-     * Get the value flag type of parameter.
-     *
-     * @param flag The flag character
-     * @return An option type
-     */
-    public static OptionType valueFlag(Character flag) {
-        checkNotNull(flag, "flag");
-        return new ValueFlag(flag);
+    @Override
+    public CommandArgs transform(CommandArgs arguments) {
+      return arguments;
+    }
+  }
+
+  private static final class OptionalPositional extends OptionType {
+
+    @Nullable
+    @Override
+    public Character getFlag() {
+      return null;
     }
 
-    private static final class RequiredPositional extends OptionType {
-        @Nullable
-        @Override
-        public Character getFlag() {
-            return null;
-        }
-
-        @Override
-        public boolean isValueFlag() {
-            return false;
-        }
-
-        @Override
-        public boolean isOptional() {
-            return false;
-        }
-
-        @Override
-        public CommandArgs transform(CommandArgs arguments) {
-            return arguments;
-        }
+    @Override
+    public boolean isValueFlag() {
+      return false;
     }
 
-    private static final class OptionalPositional extends OptionType {
-        @Nullable
-        @Override
-        public Character getFlag() {
-            return null;
-        }
-
-        @Override
-        public boolean isValueFlag() {
-            return false;
-        }
-
-        @Override
-        public boolean isOptional() {
-            return true;
-        }
-
-        @Override
-        public CommandArgs transform(CommandArgs arguments) {
-            return arguments;
-        }
+    @Override
+    public boolean isOptional() {
+      return true;
     }
 
-    private static final class BooleanFlag extends OptionType {
-        private final Character flag;
+    @Override
+    public CommandArgs transform(CommandArgs arguments) {
+      return arguments;
+    }
+  }
 
-        private BooleanFlag(Character flag) {
-            this.flag = flag;
-        }
+  private static final class BooleanFlag extends OptionType {
 
-        @Nullable
-        @Override
-        public Character getFlag() {
-            return flag;
-        }
+    private final Character flag;
 
-        @Override
-        public boolean isValueFlag() {
-            return false;
-        }
-
-        @Override
-        public boolean isOptional() {
-            return true;
-        }
-
-        @Override
-        public CommandArgs transform(CommandArgs arguments) {
-            String v = arguments.getFlags().containsKey(flag) ? "true" : "false";
-            return Arguments.copyOf(ImmutableList.of(v), arguments.getFlags(), arguments.getNamespace());
-        }
+    private BooleanFlag(Character flag) {
+      this.flag = flag;
     }
 
-    private static final class ValueFlag extends OptionType {
-        private final Character flag;
-
-        private ValueFlag(Character flag) {
-            this.flag = flag;
-        }
-
-        @Nullable
-        @Override
-        public Character getFlag() {
-            return flag;
-        }
-
-        @Override
-        public boolean isValueFlag() {
-            return true;
-        }
-
-        @Override
-        public boolean isOptional() {
-            return true;
-        }
-
-        @Override
-        public CommandArgs transform(CommandArgs arguments) {
-            String value = arguments.getFlags().get(flag);
-            if (value == null) {
-                return Arguments.copyOf(ImmutableList.<String>of(), arguments.getFlags(), arguments.getNamespace());
-            }
-            return Arguments.copyOf(ImmutableList.of(value), arguments.getFlags(), arguments.getNamespace());
-        }
+    @Nullable
+    @Override
+    public Character getFlag() {
+      return flag;
     }
+
+    @Override
+    public boolean isValueFlag() {
+      return false;
+    }
+
+    @Override
+    public boolean isOptional() {
+      return true;
+    }
+
+    @Override
+    public CommandArgs transform(CommandArgs arguments) {
+      String v = arguments.getFlags().containsKey(flag) ? "true" : "false";
+      return Arguments.copyOf(ImmutableList.of(v), arguments.getFlags(), arguments.getNamespace());
+    }
+  }
+
+  private static final class ValueFlag extends OptionType {
+
+    private final Character flag;
+
+    private ValueFlag(Character flag) {
+      this.flag = flag;
+    }
+
+    @Nullable
+    @Override
+    public Character getFlag() {
+      return flag;
+    }
+
+    @Override
+    public boolean isValueFlag() {
+      return true;
+    }
+
+    @Override
+    public boolean isOptional() {
+      return true;
+    }
+
+    @Override
+    public CommandArgs transform(CommandArgs arguments) {
+      String value = arguments.getFlags().get(flag);
+      if (value == null) {
+        return Arguments
+            .copyOf(ImmutableList.<String>of(), arguments.getFlags(), arguments.getNamespace());
+      }
+      return Arguments
+          .copyOf(ImmutableList.of(value), arguments.getFlags(), arguments.getNamespace());
+    }
+  }
 
 }

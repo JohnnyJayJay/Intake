@@ -20,27 +20,26 @@
 package com.sk89q.intake.example.parametric;
 
 import com.google.common.collect.Sets;
-
 import java.util.Set;
 
 public class Subject {
 
-    private final String name;
-    private final Set<String> permissions = Sets.newHashSet();
+  private final String name;
+  private final Set<String> permissions = Sets.newHashSet();
 
-    public Subject(String name) {
-        this.name = name;
-    }
+  public Subject(String name) {
+    this.name = name;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public boolean permit(String permission) {
-        return permissions.add(permission);
-    }
+  public boolean permit(String permission) {
+    return permissions.add(permission);
+  }
 
-    public boolean may(String permission) {
-        return permissions.contains(permission);
-    }
+  public boolean may(String permission) {
+    return permissions.contains(permission);
+  }
 }

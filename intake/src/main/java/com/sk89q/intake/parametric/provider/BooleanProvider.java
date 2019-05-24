@@ -22,30 +22,30 @@ package com.sk89q.intake.parametric.provider;
 import com.sk89q.intake.argument.ArgumentException;
 import com.sk89q.intake.argument.CommandArgs;
 import com.sk89q.intake.parametric.Provider;
-
-import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.List;
+import javax.annotation.Nullable;
 
 class BooleanProvider implements Provider<Boolean> {
 
-    static final BooleanProvider INSTANCE = new BooleanProvider();
+  static final BooleanProvider INSTANCE = new BooleanProvider();
 
-    @Override
-    public boolean isProvided() {
-        return false;
-    }
+  @Override
+  public boolean isProvided() {
+    return false;
+  }
 
-    @Nullable
-    @Override
-    public Boolean get(CommandArgs arguments, List<? extends Annotation> modifiers) throws ArgumentException {
-        return arguments.nextBoolean();
-    }
+  @Nullable
+  @Override
+  public Boolean get(CommandArgs arguments, List<? extends Annotation> modifiers)
+      throws ArgumentException {
+    return arguments.nextBoolean();
+  }
 
-    @Override
-    public List<String> getSuggestions(String prefix) {
-        return Collections.emptyList();
-    }
+  @Override
+  public List<String> getSuggestions(String prefix) {
+    return Collections.emptyList();
+  }
 
 }
