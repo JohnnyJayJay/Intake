@@ -52,7 +52,7 @@ subprojects {
     key = project.hasProperty("bintrayApiKey") ?
         project.property("bintrayApiKey") as String : System.getenv("BINTRAY_API_KEY")
     publish = true
-    setPublications("bintrayRelease")
+    setPublications("BintrayRelease")
 
     pkg.repo = "maven"
     pkg.name = "intake"
