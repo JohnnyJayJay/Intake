@@ -202,7 +202,7 @@ public abstract class AbstractParametricCallable implements CommandCallable {
 
       namespace.put(CommandArgs.class, commandArgs);
 
-      // TODO: 16.06.2019
+      // TODO: 16.06.2019 fix generics
       for (InterceptionCase<?> interception : interceptionCases) {
         if (!interception.getInterceptor().intercept(context, interception.getAnnotation())) {
           return false;

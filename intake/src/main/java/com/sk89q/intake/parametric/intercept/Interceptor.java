@@ -18,6 +18,6 @@ public interface Interceptor<T extends Annotation> {
    *
    * @return true if the command should be called, false if the command shouldn't be called
    */
-  boolean intercept(CommandContext context, Annotation annotation);
+  boolean intercept(CommandContext context, T annotation);
 
 }
