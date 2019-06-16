@@ -24,6 +24,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.sk89q.intake.parametric.binder.Binder;
 import com.sk89q.intake.parametric.binder.BindingBuilder;
+import com.sk89q.intake.parametric.binder.InterceptorBindingBuilder;
+
+import java.lang.annotation.Annotation;
 
 /**
  * Modules should extend this class and call the bind() functions to add bindings.
@@ -52,5 +55,9 @@ public abstract class AbstractModule implements Module {
 
   public <T> BindingBuilder<T> bind(Key<T> key) {
     return getBinder().bind(key);
+  }
+
+  public <T extends Annotation> InterceptorBindingBuilder<T> interceptAt(Class<T> annotation) {
+    return getBinder().interceptAt(annotation);
   }
 }
