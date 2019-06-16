@@ -1,6 +1,6 @@
 package com.sk89q.intake.parametric.binder;
 
-import com.sk89q.intake.interceptor.Interceptor;
+import com.sk89q.intake.parametric.intercept.Interceptor;
 import java.lang.annotation.Annotation;
 
 /**
@@ -12,7 +12,7 @@ import java.lang.annotation.Annotation;
 public interface InterceptorBindingBuilder<T extends Annotation> {
 
   /**
-   * Binds a {@link com.sk89q.intake.interceptor.Interceptor} to a specific annotation.
+   * Binds a {@link Interceptor} to a specific annotation.
    */
   void using(Interceptor<T> interceptor);
 }

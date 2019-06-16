@@ -21,6 +21,8 @@ package com.sk89q.intake;
 
 import com.sk89q.intake.argument.Namespace;
 import com.sk89q.intake.completion.CommandCompleter;
+import com.sk89q.intake.parametric.intercept.InterceptionCase;
+import com.sk89q.intake.parametric.intercept.Interceptor;
 import com.sk89q.intake.util.auth.AuthorizationException;
 import java.util.List;
 
@@ -75,5 +77,8 @@ public interface CommandCallable extends CommandCompleter {
    * @return Whether permission is provided
    */
   boolean testPermission(Namespace namespace);
+
+  // TODO: 16.06.2019 docs
+  List<InterceptionCase<?>> getInterceptionCases();
 
 }

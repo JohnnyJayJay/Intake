@@ -30,13 +30,13 @@ import java.lang.annotation.Annotation;
 class InternalBinder implements Binder {
 
   private final BindingList bindings;
-  private final InterceptorRegistry interceptorRegistry;
+  private final InterceptorList interceptorList;
 
   InternalBinder(BindingList bindings,
-      InterceptorRegistry interceptorRegistry) {
+      InterceptorList interceptorList) {
     checkNotNull(bindings, "bindings");
-    checkNotNull(interceptorRegistry);
-    this.interceptorRegistry = interceptorRegistry;
+    checkNotNull(interceptorList);
+    this.interceptorList = interceptorList;
     this.bindings = bindings;
   }
 
@@ -52,7 +52,7 @@ class InternalBinder implements Binder {
 
   @Override
   public <T extends Annotation> InterceptorBindingBuilder<T> interceptAt(Class<T> annotation) {
-    return new InternalInterceptorBindingBuilder<>(interceptorRegistry, annotation);
+    return new InternalInterceptorBindingBuilder<>(interceptorList, annotation);
   }
 
 }

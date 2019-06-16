@@ -21,7 +21,8 @@ package com.sk89q.intake.parametric;
 
 import com.sk89q.intake.argument.ArgumentException;
 import com.sk89q.intake.argument.CommandArgs;
-import com.sk89q.intake.interceptor.Interceptor;
+import com.sk89q.intake.parametric.intercept.Interceptor;
+
 import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.Optional;
@@ -112,8 +113,9 @@ public interface Injector {
       throws ArgumentException, ProvisionException;
 
 
+  // TODO: 16.06.2019 docs
   /**
-   * Returns the {@link Interceptor} that is bind to the given annotation.
+   * Returns the {@link Interceptor} that is bind to the given annotation or null if none exists.
    */
-  <T extends Annotation> Optional<Interceptor<T>> getInterceptor(Class<T> annotation);
+  <T extends Annotation> Interceptor<T> getInterceptor(Class<T> annotation);
 }

@@ -1,6 +1,6 @@
 package com.sk89q.intake.internal.parametric;
 
-import com.sk89q.intake.interceptor.Interceptor;
+import com.sk89q.intake.parametric.intercept.Interceptor;
 import com.sk89q.intake.parametric.binder.InterceptorBindingBuilder;
 import java.lang.annotation.Annotation;
 
@@ -13,16 +13,16 @@ import java.lang.annotation.Annotation;
 final class InternalInterceptorBindingBuilder<T extends Annotation> implements
     InterceptorBindingBuilder<T> {
 
-  private final InterceptorRegistry interceptorRegistry;
+  private final InterceptorList interceptorList;
   private final Class<T> annotation;
 
-  InternalInterceptorBindingBuilder(InterceptorRegistry interceptorRegistry, Class<T> annotation) {
-    this.interceptorRegistry = interceptorRegistry;
+  InternalInterceptorBindingBuilder(InterceptorList interceptorList, Class<T> annotation) {
+    this.interceptorList = interceptorList;
     this.annotation = annotation;
   }
 
   @Override
   public void using(Interceptor<T> interceptor) {
-    interceptorRegistry.add(annotation, interceptor);
+    interceptorList.addInterceptor(annotation, interceptor);
   }
 }

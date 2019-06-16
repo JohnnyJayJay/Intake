@@ -35,10 +35,11 @@ import com.sk89q.intake.argument.CommandContext;
 import com.sk89q.intake.argument.MissingArgumentException;
 import com.sk89q.intake.argument.Namespace;
 import com.sk89q.intake.argument.UnusedArgumentException;
-import com.sk89q.intake.interceptor.Interceptor;
 import com.sk89q.intake.parametric.handler.ExceptionConverter;
 import com.sk89q.intake.parametric.handler.InvokeHandler;
 import com.sk89q.intake.parametric.handler.InvokeListener;
+import com.sk89q.intake.parametric.intercept.InterceptionCase;
+import com.sk89q.intake.parametric.intercept.Interceptor;
 import com.sk89q.intake.util.auth.AuthorizationException;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -54,6 +55,7 @@ public abstract class AbstractParametricCallable implements CommandCallable {
 
   private final ParametricBuilder builder;
   private final ArgumentParser parser;
+  private final List<InterceptionCase<?>> interceptionCases;
 
   private List<? extends Annotation> commandAnnotations = Collections.emptyList();
   private boolean ignoreUnusedFlags = false;
@@ -61,16 +63,25 @@ public abstract class AbstractParametricCallable implements CommandCallable {
 
   /**
    * Create a new instance.
-   *
-   * @param builder An instance of the parametric builder
+   *  @param builder An instance of the parametric builder
    * @param parser The argument parser
+   * @param interceptionCases
    */
-  protected AbstractParametricCallable(ParametricBuilder builder, ArgumentParser parser) {
+  protected AbstractParametricCallable(ParametricBuilder builder, ArgumentParser parser,
+                                       List<InterceptionCase<?>> interceptionCases) {
+    checkNotNull(interceptionCases, "interceptionCases");
     checkNotNull(builder, "builder");
     checkNotNull(parser, "parser");
 
     this.builder = builder;
     this.parser = parser;
+    this.interceptionCases = interceptionCases; // TODO: 16.06.2019 defensive copy?
+  }
+
+
+  @Override
+  public List<InterceptionCase<?>> getInterceptionCases() {
+    return interceptionCases;
   }
 
   /**
@@ -189,6 +200,15 @@ public abstract class AbstractParametricCallable implements CommandCallable {
         return true; // Abort early
       }
 
+      namespace.put(CommandArgs.class, commandArgs);
+
+      // TODO: 16.06.2019
+      for (InterceptionCase<?> interception : interceptionCases) {
+        if (!interception.getInterceptor().intercept(context, interception.getAnnotation())) {
+          return false;
+        }
+      }
+
       final Object[] args = parser.parseArguments(commandArgs, ignoreUnusedFlags, unusedFlags);
 
       // preInvoke
@@ -201,8 +221,6 @@ public abstract class AbstractParametricCallable implements CommandCallable {
       if (!invoke) {
         return true; // Abort early
       }
-
-      namespace.put(CommandArgs.class, commandArgs);
 
       // invoke
       try {

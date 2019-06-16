@@ -23,6 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import com.google.common.primitives.Chars;
 import com.sk89q.intake.Command;
 import com.sk89q.intake.CommandCallable;
@@ -32,6 +33,9 @@ import com.sk89q.intake.InvocationCommandException;
 import com.sk89q.intake.Require;
 import com.sk89q.intake.argument.Namespace;
 import com.sk89q.intake.parametric.handler.InvokeListener;
+import com.sk89q.intake.parametric.intercept.InterceptionCase;
+import com.sk89q.intake.parametric.intercept.Interceptor;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -51,8 +55,9 @@ final class MethodCallable extends AbstractParametricCallable {
   private final List<String> permissions;
 
   private MethodCallable(ParametricBuilder builder, ArgumentParser parser, Object object,
-      Method method, Description description, List<String> permissions) {
-    super(builder, parser);
+                         Method method, Description description, List<String> permissions,
+                         List<InterceptionCase<?>> interceptionCases) {
+    super(builder, parser, interceptionCases);
     this.object = object;
     this.method = method;
     this.description = description;
@@ -101,6 +106,16 @@ final class MethodCallable extends AbstractParametricCallable {
     checkNotNull(method, "method");
 
     Set<Annotation> commandAnnotations = ImmutableSet.copyOf(method.getAnnotations());
+    Injector injector = builder.getInjector();
+    // TODO: 16.06.2019 fix generics
+    List<InterceptionCase<?>> interceptionCases = Lists.newArrayList();
+    for (Annotation annotation : commandAnnotations) {
+      Interceptor<?> interceptor = injector.getInterceptor(annotation.getClass());
+      if (interceptor != null) {
+        InterceptionCase<?> interceptionCase = InterceptionCase.create(interceptor, annotation);
+        interceptionCases.add(interceptionCase);
+      }
+    }
 
     Command definition = method.getAnnotation(Command.class);
     checkNotNull(definition, "Method lacks a @Command annotation");
@@ -138,7 +153,7 @@ final class MethodCallable extends AbstractParametricCallable {
     Description description = descBuilder.build();
 
     MethodCallable callable = new MethodCallable(builder, parser, object, method, description,
-        permissions);
+        permissions, interceptionCases);
     callable.setCommandAnnotations(ImmutableList.copyOf(method.getAnnotations()));
     callable.setIgnoreUnusedFlags(ignoreUnusedFlags);
     callable.setUnusedFlags(unusedFlags);

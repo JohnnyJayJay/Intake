@@ -1,5 +1,6 @@
-package com.sk89q.intake.interceptor;
+package com.sk89q.intake.parametric.intercept;
 
+import com.sk89q.intake.argument.CommandContext;
 import com.sk89q.intake.argument.Namespace;
 import java.lang.annotation.Annotation;
 
@@ -9,6 +10,7 @@ import java.lang.annotation.Annotation;
  * @author Stu
  * @since 16.06.19
  */
+// TODO: 16.06.2019 docs
 public interface Interceptor<T extends Annotation> {
 
   /**
@@ -16,6 +18,6 @@ public interface Interceptor<T extends Annotation> {
    *
    * @return true if the command should be called, false if the command shouldn't be called
    */
-  boolean check(Namespace namespace, T annotation);
+  boolean intercept(CommandContext context, Annotation annotation);
 
 }

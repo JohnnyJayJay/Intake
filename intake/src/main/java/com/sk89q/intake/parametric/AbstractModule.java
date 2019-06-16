@@ -22,7 +22,6 @@ package com.sk89q.intake.parametric;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.sk89q.intake.interceptor.Interceptor;
 import com.sk89q.intake.parametric.binder.Binder;
 import com.sk89q.intake.parametric.binder.BindingBuilder;
 

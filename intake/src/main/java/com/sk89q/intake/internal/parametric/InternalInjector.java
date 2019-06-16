@@ -23,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.sk89q.intake.argument.ArgumentException;
 import com.sk89q.intake.argument.CommandArgs;
-import com.sk89q.intake.interceptor.Interceptor;
+import com.sk89q.intake.parametric.intercept.Interceptor;
 import com.sk89q.intake.parametric.Binding;
 import com.sk89q.intake.parametric.Injector;
 import com.sk89q.intake.parametric.Key;
@@ -39,7 +39,7 @@ import javax.annotation.Nullable;
 public class InternalInjector implements Injector {
 
   private final BindingList bindings = new BindingList();
-  private final InterceptorRegistry interceptorRegistry = new InterceptorRegistry();
+  private final InterceptorList interceptorList = new InterceptorList();
 
   public InternalInjector() {
     install(new DefaultModule());
@@ -48,7 +48,7 @@ public class InternalInjector implements Injector {
   @Override
   public void install(Module module) {
     checkNotNull(module, "module");
-    module.configure(new InternalBinder(bindings, interceptorRegistry));
+    module.configure(new InternalBinder(bindings, interceptorList));
   }
 
   @Override
@@ -94,8 +94,8 @@ public class InternalInjector implements Injector {
   }
 
   @Override
-  public <T extends Annotation> Optional<Interceptor<T>> getInterceptor(Class<T> annotation) {
-    return interceptorRegistry.getInterceptor(annotation);
+  public <T extends Annotation> Interceptor<T> getInterceptor(Class<T> annotation) {
+    return interceptorList.getInterceptor(annotation);
   }
 
 }
