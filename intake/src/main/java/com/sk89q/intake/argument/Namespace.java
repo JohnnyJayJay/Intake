@@ -82,11 +82,11 @@ public class Namespace {
    *
    * @param key Key with which the specified value is to be associated
    * @param value Value to be associated with the specified key
-   * @return The previous value associated with <tt>key</tt>, or
-   *     <tt>null</tt> if there was no mapping for <tt>key</tt>.
-   *     (A <tt>null</tt> return can also indicate that the map previously associated <tt>null</tt>
-   *     with <tt>key</tt>, if the implementation supports <tt>null</tt> values.)
-   * @throws UnsupportedOperationException if the <tt>put</tt> operation is not supported by
+   * @return The previous value associated with {@code key}, or
+   *     {@code null} if there was no mapping for {@code key}.
+   *     (A {@code null} return can also indicate that the map previously associated {@code null}
+   *     with {@code key}, if the implementation supports {@code null} values.)
+   * @throws UnsupportedOperationException if the {@code put} operation is not supported by
    *     this map
    * @throws ClassCastException if the class of the specified key or value prevents it from
    *     being stored in this map
