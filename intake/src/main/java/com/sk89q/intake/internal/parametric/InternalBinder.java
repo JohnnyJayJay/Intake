@@ -24,24 +24,35 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.sk89q.intake.parametric.Key;
 import com.sk89q.intake.parametric.binder.Binder;
 import com.sk89q.intake.parametric.binder.BindingBuilder;
+import com.sk89q.intake.parametric.binder.InterceptorBindingBuilder;
+import java.lang.annotation.Annotation;
 
 class InternalBinder implements Binder {
 
   private final BindingList bindings;
+  private final InterceptorRegistry interceptorRegistry;
 
-  InternalBinder(BindingList bindings) {
+  InternalBinder(BindingList bindings,
+      InterceptorRegistry interceptorRegistry) {
     checkNotNull(bindings, "bindings");
+    checkNotNull(interceptorRegistry);
+    this.interceptorRegistry = interceptorRegistry;
     this.bindings = bindings;
   }
 
   @Override
   public <T> BindingBuilder<T> bind(Class<T> type) {
-    return new InternalBinderBuilder<T>(bindings, Key.get(type));
+    return new InternalBinderBuilder<>(bindings, Key.get(type));
   }
 
   @Override
   public <T> BindingBuilder<T> bind(Key<T> type) {
-    return new InternalBinderBuilder<T>(bindings, type);
+    return new InternalBinderBuilder<>(bindings, type);
+  }
+
+  @Override
+  public <T extends Annotation> InterceptorBindingBuilder<T> interceptAt(Class<T> annotation) {
+    return new InternalInterceptorBindingBuilder<>(interceptorRegistry, annotation);
   }
 
 }

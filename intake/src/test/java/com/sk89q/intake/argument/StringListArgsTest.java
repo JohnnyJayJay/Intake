@@ -26,6 +26,6 @@ public class StringListArgsTest extends AbstractCommandArgsTest {
 
   @Override
   protected CommandArgs createCommandArgs(List<String> args) {
-    return new StringListArgs(args, ImmutableMap.<Character, String>of(), new Namespace());
+    return new StringListArgs(args, ImmutableMap.of(), new Namespace());
   }
 }

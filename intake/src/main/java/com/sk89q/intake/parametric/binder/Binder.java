@@ -21,6 +21,7 @@ package com.sk89q.intake.parametric.binder;
 
 import com.sk89q.intake.parametric.AbstractModule;
 import com.sk89q.intake.parametric.Key;
+import java.lang.annotation.Annotation;
 
 /**
  * A binder is a fluent interface for creating bindings.
@@ -48,4 +49,8 @@ public interface Binder {
    */
   <T> BindingBuilder<T> bind(Key<T> key);
 
+  /**
+   * Start a binding of a Annotation
+   */
+  <T extends Annotation> InterceptorBindingBuilder<T> interceptAt(Class<T> annotation);
 }

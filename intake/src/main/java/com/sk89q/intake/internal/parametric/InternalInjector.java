@@ -23,6 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.sk89q.intake.argument.ArgumentException;
 import com.sk89q.intake.argument.CommandArgs;
+import com.sk89q.intake.interceptor.Interceptor;
 import com.sk89q.intake.parametric.Binding;
 import com.sk89q.intake.parametric.Injector;
 import com.sk89q.intake.parametric.Key;
@@ -32,11 +33,13 @@ import com.sk89q.intake.parametric.ProvisionException;
 import com.sk89q.intake.parametric.provider.DefaultModule;
 import java.lang.annotation.Annotation;
 import java.util.List;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 public class InternalInjector implements Injector {
 
   private final BindingList bindings = new BindingList();
+  private final InterceptorRegistry interceptorRegistry = new InterceptorRegistry();
 
   public InternalInjector() {
     install(new DefaultModule());
@@ -45,7 +48,7 @@ public class InternalInjector implements Injector {
   @Override
   public void install(Module module) {
     checkNotNull(module, "module");
-    module.configure(new InternalBinder(bindings));
+    module.configure(new InternalBinder(bindings, interceptorRegistry));
   }
 
   @Override
@@ -88,6 +91,11 @@ public class InternalInjector implements Injector {
   public <T> T getInstance(Class<T> type, CommandArgs arguments,
       List<? extends Annotation> modifiers) throws ArgumentException, ProvisionException {
     return getInstance(Key.get(type), arguments, modifiers);
+  }
+
+  @Override
+  public <T extends Annotation> Optional<Interceptor<T>> getInterceptor(Class<T> annotation) {
+    return interceptorRegistry.getInterceptor(annotation);
   }
 
 }

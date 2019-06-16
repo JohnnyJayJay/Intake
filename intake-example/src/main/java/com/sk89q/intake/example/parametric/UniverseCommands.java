@@ -26,6 +26,7 @@ import com.sk89q.intake.example.parametric.model.CelestialType;
 import com.sk89q.intake.example.parametric.model.Universe;
 import com.sk89q.intake.parametric.annotation.Switch;
 import com.sk89q.intake.parametric.annotation.Text;
+import javax.annotation.Nonnull;
 
 public class UniverseCommands {
 

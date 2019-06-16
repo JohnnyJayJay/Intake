@@ -84,7 +84,7 @@ public final class ParametricExample {
         .getDispatcher();
 
     executeCommand(namespace, dispatcher, "body info pluto");
-    executeCommand(namespace, dispatcher, "body settype pluto dwarfplanet");
+    /*executeCommand(namespace, dispatcher, "body settype pluto dwarfplanet");
     executeCommand(namespace, dispatcher, "body info pluto");
     executeCommand(namespace, dispatcher, "body settype poseidon planet");
     executeCommand(namespace, dispatcher, "body settype pluto unknown");
@@ -95,7 +95,7 @@ public final class ParametricExample {
     executeCommand(namespace, dispatcher, "body info -f mercury"); // Use of a flag (-f)
     executeCommand(namespace, dispatcher, "body settemp earth 59 -f"); // Use of a flag (-f)
     executeCommand(namespace, dispatcher, "body info earth");
-    executeCommand(namespace, dispatcher, "body delete earth"); // Permission fail
+    executeCommand(namespace, dispatcher, "body delete earth"); // Permission fail*/
   }
 
   private static void executeCommand(Namespace namespace, CommandCallable callable,

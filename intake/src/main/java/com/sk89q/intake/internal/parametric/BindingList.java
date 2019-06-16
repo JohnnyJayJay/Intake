@@ -36,7 +36,7 @@ import javax.annotation.Nullable;
 class BindingList {
 
   private final Multimap<Type, BindingEntry<?>> providers = Multimaps
-      .newMultimap(Maps.<Type, Collection<BindingEntry<?>>>newHashMap(), new CollectionSupplier());
+      .newMultimap(Maps.newHashMap(), new CollectionSupplier());
 
   public <T> void addBinding(Key<T> key, Provider<T> provider) {
     checkNotNull(key, "key");

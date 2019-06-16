@@ -35,6 +35,7 @@ import com.sk89q.intake.argument.CommandContext;
 import com.sk89q.intake.argument.MissingArgumentException;
 import com.sk89q.intake.argument.Namespace;
 import com.sk89q.intake.argument.UnusedArgumentException;
+import com.sk89q.intake.interceptor.Interceptor;
 import com.sk89q.intake.parametric.handler.ExceptionConverter;
 import com.sk89q.intake.parametric.handler.InvokeHandler;
 import com.sk89q.intake.parametric.handler.InvokeListener;
@@ -44,7 +45,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -163,7 +163,7 @@ public abstract class AbstractParametricCallable implements CommandCallable {
     String[] split = CommandContext.split(calledCommand + " " + stringArguments);
     CommandContext context = new CommandContext(split, parser.getValueFlags(), false, namespace);
     final CommandArgs commandArgs = Arguments.viewOf(context);
-    List<InvokeHandler> handlers = new ArrayList<InvokeHandler>();
+    List<InvokeHandler> handlers = new ArrayList<>();
 
     // Provide help if -? is specified
     if (context.hasFlag('?')) {
@@ -206,12 +206,9 @@ public abstract class AbstractParametricCallable implements CommandCallable {
 
       // invoke
       try {
-        builder.getCommandExecutor().submit(new Callable<Object>() {
-          @Override
-          public Object call() throws Exception {
-            AbstractParametricCallable.this.call(args);
-            return null;
-          }
+        builder.getCommandExecutor().submit(() -> {
+          AbstractParametricCallable.this.call(args);
+          return null;
         }, commandArgs).get();
       } catch (ExecutionException e) {
         throw e.getCause();
