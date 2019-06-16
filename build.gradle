@@ -2,15 +2,19 @@ plugins {
   id 'java-library'
   id 'maven'
   id 'checkstyle'
+  id "com.jfrog.bintray" version "1.8.4"
+  id 'maven-publish'
 }
 
 subprojects {
   apply plugin: 'java-library'
   apply plugin: 'maven'
   apply plugin: 'checkstyle'
+  apply plugin: 'com.jfrog.bintray'
+  apply plugin: 'maven-publish'
 
-  group = 'com.sk89q.intake'
-  version = '4.2-SNAPSHOT'
+  group = 'com.github.stupremee'
+  version = '4.2'
 
   checkstyle.configFile = new File(rootProject.projectDir, "config/checkstyle/checkstyle.xml")
 
@@ -41,4 +45,34 @@ subprojects {
   build.dependsOn(checkstyleTest)
   build.dependsOn(sourcesJar)
   build.dependsOn(javadocJar)
+
+  bintray {
+    user = project.hasProperty("bintrayUser") ?
+        project.property("bintrayUser") as String : System.getenv("BINTRAY_USER")
+    key = project.hasProperty("bintrayApiKey") ?
+        project.property("bintrayApiKey") as String : System.getenv("BINTRAY_API_KEY")
+    publish = true
+    setPublications("bintrayRelease")
+
+    pkg.repo = "maven"
+    pkg.name = "intake"
+    pkg.vcsUrl = "https://github.com/Stupremee/intake.git"
+    pkg.setLicenses("GPL-3.0")
+
+    pkg.version.name = project.version.toString()
+    pkg.version.released = new Date().toString()
+  }
+
+  publishing {
+    publications {
+      BintrayRelease(MavenPublication) {
+        from components.java
+        group "com.github.stupremee"
+        artifactId "intake"
+        version project.version
+        artifact sourcesJar
+        artifact javadocJar
+      }
+    }
+  }
 }
