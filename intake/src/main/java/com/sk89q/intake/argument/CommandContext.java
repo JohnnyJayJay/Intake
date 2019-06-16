@@ -289,12 +289,6 @@ public class CommandContext {
     return index < parsedArgs.size() ? Double.parseDouble(parsedArgs.get(index)) : def;
   }
 
-  /**
-   * Gets a slice.
-   *
-   * @param index The index
-   * @return The string array
-   */
   public String[] getSlice(int index) {
     String[] slice = new String[originalArgs.length - index];
     System.arraycopy(originalArgs, index, slice, 0, originalArgs.length - index);

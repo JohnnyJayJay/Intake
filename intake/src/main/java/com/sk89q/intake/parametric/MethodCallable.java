@@ -112,7 +112,7 @@ final class MethodCallable extends AbstractParametricCallable {
     Annotation[][] annotations = method.getParameterAnnotations();
     Type[] types = method.getGenericParameterTypes();
 
-    ArgumentParser.Builder parserBuilder = new ArgumentParser.Builder(builder.getInjector());
+    ArgumentParser.Builder parserBuilder = ArgumentParser.builder(builder.getInjector());
     for (int i = 0; i < types.length; i++) {
       parserBuilder.addParameter(types[i], Arrays.asList(annotations[i]));
     }

@@ -59,7 +59,7 @@ class StringProvider implements Provider<String> {
    * @param modifiers the list of modifiers to scan
    * @throws ArgumentParseException on a validation error
    */
-  protected static void validate(String string, List<? extends Annotation> modifiers)
+  static void validate(String string, List<? extends Annotation> modifiers)
       throws ArgumentParseException {
     if (string == null) {
       return;
@@ -73,7 +73,8 @@ class StringProvider implements Provider<String> {
           if (!string.matches(validate.regex())) {
             throw new ArgumentParseException(
                 String.format(
-                    "The given text doesn't match the right format (technically speaking, the 'format' is %s)",
+                    "The given text doesn't match the right format "
+                        + "(technically speaking, the 'format' is %s)",
                     validate.regex()));
           }
         }

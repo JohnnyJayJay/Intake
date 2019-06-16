@@ -39,5 +39,4 @@ public @interface Require {
    * @return a list of permissions
    */
   String[] value();
-
 }

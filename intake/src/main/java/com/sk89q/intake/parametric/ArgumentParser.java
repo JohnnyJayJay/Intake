@@ -142,12 +142,7 @@ public final class ArgumentParser {
         return provider
             .get(Arguments.copyOf(defaultValue, arguments.getFlags(), arguments.getNamespace()),
                 entry.getModifiers());
-      } catch (ArgumentException e) {
-        throw new IllegalParameterException(
-            "No value was specified for the '" + entry.getParameter().getName() + "' parameter "
-                + "so the default value '" + Joiner.on(" ").join(defaultValue)
-                + "' was used, but this value doesn't work due to an error: " + e.getMessage());
-      } catch (ProvisionException e) {
+      } catch (ArgumentException | ProvisionException e) {
         throw new IllegalParameterException(
             "No value was specified for the '" + entry.getParameter().getName() + "' parameter "
                 + "so the default value '" + Joiner.on(" ").join(defaultValue)
@@ -180,7 +175,7 @@ public final class ArgumentParser {
 
         if (!found) {
           if (unconsumedFlags == null) {
-            unconsumedFlags = new HashSet<Character>();
+            unconsumedFlags = new HashSet<>();
           }
           unconsumedFlags.add(flag);
         }
@@ -206,6 +201,10 @@ public final class ArgumentParser {
     }
   }
 
+  public static Builder builder(Injector injector) {
+    return new Builder(injector);
+  }
+
   /**
    * Builds instances of ArgumentParser.
    */
@@ -222,7 +221,7 @@ public final class ArgumentParser {
      *
      * @param injector The injector
      */
-    public Builder(Injector injector) {
+    private Builder(Injector injector) {
       checkNotNull(injector, "injector");
       this.injector = injector;
     }
@@ -234,7 +233,7 @@ public final class ArgumentParser {
      * @throws IllegalParameterException If there is a problem with the parameter
      */
     public void addParameter(Type type) throws IllegalParameterException {
-      addParameter(type, ImmutableList.<Annotation>of());
+      addParameter(type, ImmutableList.of());
     }
 
     /**

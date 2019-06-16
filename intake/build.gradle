@@ -1,5 +1,5 @@
 dependencies {
-  compile 'com.google.guava:guava:27.1-jre'
+  compile 'com.google.guava:guava:28.0-jre'
   testCompile 'junit:junit:4.11'
   testCompile 'org.hamcrest:hamcrest-library:1.2.1'
 }
