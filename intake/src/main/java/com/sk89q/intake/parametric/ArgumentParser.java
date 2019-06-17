@@ -36,7 +36,7 @@ import com.sk89q.intake.argument.CommandArgs;
 import com.sk89q.intake.argument.MissingArgumentException;
 import com.sk89q.intake.argument.UnusedArgumentException;
 import com.sk89q.intake.parametric.annotation.Classifier;
-import com.sk89q.intake.parametric.annotation.Optional;
+import com.sk89q.intake.parametric.annotation.OptArgs;
 import com.sk89q.intake.parametric.annotation.Switch;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -271,7 +271,7 @@ public final class ArgumentParser {
                 .flag(((Switch) annotation).value())
                 : OptionType.valueFlag(((Switch) annotation).value());
 
-          } else if (annotation instanceof Optional) {
+          } else if (annotation instanceof OptArgs) {
             if (optionType != null) {
               throw new IllegalParameterException(
                   "Both @Optional and @Switch were found on the same element for parameter #"
@@ -282,7 +282,7 @@ public final class ArgumentParser {
 
             optionType = OptionType.optionalPositional();
 
-            String[] value = ((Optional) annotation).value();
+            String[] value = ((OptArgs) annotation).value();
             if (value.length > 0) {
               defaultValue = ImmutableList.copyOf(value);
             }
