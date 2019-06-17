@@ -27,7 +27,7 @@ final class InterceptorList {
   }
 
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("unchecked") // Annotation class and Interceptor are always of the same type
   <T extends Annotation> Interceptor<T> getInterceptor(Class<T> annotation) {
     return entries.stream()
         .filter(entry -> entry.type.equals(annotation))
