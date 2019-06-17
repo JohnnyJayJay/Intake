@@ -56,7 +56,7 @@ final class MethodCallable extends AbstractParametricCallable {
 
   private MethodCallable(ParametricBuilder builder, ArgumentParser parser, Object object,
                          Method method, Description description, List<String> permissions,
-                         List<InterceptionCase<?>> interceptionCases) {
+                         List<InterceptionCase> interceptionCases) {
     super(builder, parser, interceptionCases);
     this.object = object;
     this.method = method;
@@ -108,11 +108,11 @@ final class MethodCallable extends AbstractParametricCallable {
     Set<Annotation> commandAnnotations = ImmutableSet.copyOf(method.getAnnotations());
     Injector injector = builder.getInjector();
     // TODO: 16.06.2019 fix generics
-    List<InterceptionCase<?>> interceptionCases = Lists.newArrayList();
+    List<InterceptionCase> interceptionCases = Lists.newArrayList();
     for (Annotation annotation : commandAnnotations) {
-      Interceptor<?> interceptor = injector.getInterceptor(annotation.getClass());
+      Interceptor interceptor = injector.getInterceptor(annotation.getClass());
       if (interceptor != null) {
-        InterceptionCase<?> interceptionCase = InterceptionCase.create(interceptor, annotation);
+        InterceptionCase interceptionCase = InterceptionCase.create(interceptor, annotation);
         interceptionCases.add(interceptionCase);
       }
     }

@@ -55,7 +55,7 @@ public abstract class AbstractParametricCallable implements CommandCallable {
 
   private final ParametricBuilder builder;
   private final ArgumentParser parser;
-  private final List<InterceptionCase<?>> interceptionCases;
+  private final List<InterceptionCase> interceptionCases;
 
   private List<? extends Annotation> commandAnnotations = Collections.emptyList();
   private boolean ignoreUnusedFlags = false;
@@ -68,7 +68,7 @@ public abstract class AbstractParametricCallable implements CommandCallable {
    * @param interceptionCases
    */
   protected AbstractParametricCallable(ParametricBuilder builder, ArgumentParser parser,
-                                       List<InterceptionCase<?>> interceptionCases) {
+                                       List<InterceptionCase> interceptionCases) {
     checkNotNull(interceptionCases, "interceptionCases");
     checkNotNull(builder, "builder");
     checkNotNull(parser, "parser");
@@ -79,8 +79,9 @@ public abstract class AbstractParametricCallable implements CommandCallable {
   }
 
 
+  // TODO: 17.06.2019 remove convert to generic type?
   @Override
-  public List<InterceptionCase<?>> getInterceptionCases() {
+  public List<InterceptionCase> getInterceptionCases() {
     return interceptionCases;
   }
 
@@ -203,7 +204,7 @@ public abstract class AbstractParametricCallable implements CommandCallable {
       namespace.put(CommandArgs.class, commandArgs);
 
       // TODO: 16.06.2019 fix generics
-      for (InterceptionCase<?> interception : interceptionCases) {
+      for (InterceptionCase interception : interceptionCases) {
         if (!interception.getInterceptor().intercept(context, interception.getAnnotation())) {
           return false;
         }
