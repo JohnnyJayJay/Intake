@@ -35,6 +35,7 @@ import com.sk89q.intake.OptionType;
 import com.sk89q.intake.Parameter;
 import com.sk89q.intake.argument.CommandContext;
 import com.sk89q.intake.argument.Namespace;
+import com.sk89q.intake.parametric.intercept.InterceptionCase;
 import com.sk89q.intake.util.auth.AuthorizationException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -214,6 +215,15 @@ public class SimpleDispatcher implements Dispatcher {
     }
 
     return false;
+  }
+
+  @Override
+  public List<InterceptionCase<?>> getInterceptionCases() {
+    List<InterceptionCase<?>> cases = new ArrayList<>();
+    for (CommandMapping mapping : getCommands()) {
+      cases.addAll(mapping.getCallable().getInterceptionCases());
+    }
+    return Collections.unmodifiableList(cases);
   }
 
 }
