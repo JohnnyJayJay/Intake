@@ -55,7 +55,7 @@ public abstract class AbstractParametricCallable implements CommandCallable {
 
   private final ParametricBuilder builder;
   private final ArgumentParser parser;
-  private final List<InterceptionCase> interceptionCases;
+  private final List<InterceptionCase<?>> interceptionCases;
 
   private List<? extends Annotation> commandAnnotations = Collections.emptyList();
   private boolean ignoreUnusedFlags = false;
@@ -65,23 +65,21 @@ public abstract class AbstractParametricCallable implements CommandCallable {
    * Create a new instance.
    *  @param builder An instance of the parametric builder
    * @param parser The argument parser
-   * @param interceptionCases
+   * @param interceptionCases a List of {@link InterceptionCase}s that will be called one by one before each invocation.
    */
   protected AbstractParametricCallable(ParametricBuilder builder, ArgumentParser parser,
-                                       List<InterceptionCase> interceptionCases) {
+                                       List<InterceptionCase<?>> interceptionCases) {
     checkNotNull(interceptionCases, "interceptionCases");
     checkNotNull(builder, "builder");
     checkNotNull(parser, "parser");
 
     this.builder = builder;
     this.parser = parser;
-    this.interceptionCases = interceptionCases; // TODO: 16.06.2019 defensive copy?
+    this.interceptionCases = interceptionCases;
   }
 
-
-  // TODO: 17.06.2019 remove convert to generic type?
   @Override
-  public List<InterceptionCase> getInterceptionCases() {
+  public List<InterceptionCase<?>> getInterceptionCases() {
     return interceptionCases;
   }
 
@@ -203,9 +201,9 @@ public abstract class AbstractParametricCallable implements CommandCallable {
 
       namespace.put(CommandArgs.class, commandArgs);
 
-      // TODO: 16.06.2019 fix generics
       for (InterceptionCase interception : interceptionCases) {
-        if (!interception.getInterceptor().intercept(context, interception.getAnnotation())) {
+        boolean mayProceed = interception.intercept(context);
+        if (!mayProceed) {
           return false;
         }
       }

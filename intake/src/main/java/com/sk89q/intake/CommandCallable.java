@@ -78,7 +78,11 @@ public interface CommandCallable extends CommandCompleter {
    */
   boolean testPermission(Namespace namespace);
 
-  // TODO: 16.06.2019 docs
-  List<InterceptionCase> getInterceptionCases();
+  /**
+   * Get a list of all {@link InterceptionCase interception cases} associated with this CommandCallable
+   *
+   * @return a list of {@link InterceptionCase}
+   */
+  List<InterceptionCase<?>> getInterceptionCases();
 
 }

@@ -113,9 +113,11 @@ public interface Injector {
       throws ArgumentException, ProvisionException;
 
 
-  // TODO: 16.06.2019 docs
+
   /**
-   * Returns the {@link Interceptor} that is bind to the given annotation or null if none exists.
+   * Returns the {@link Interceptor} that is bound to the given annotation, or null if none exists.
+   *
+   * @param annotation The annotation class for the interceptor.
    */
   <T extends Annotation> Interceptor<T> getInterceptor(Class<T> annotation);
 }
