@@ -19,34 +19,24 @@
 
 package com.sk89q.intake.parametric;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.sk89q.intake.CommandCallable;
 import com.sk89q.intake.CommandException;
 import com.sk89q.intake.InvalidUsageException;
 import com.sk89q.intake.InvocationCommandException;
-import com.sk89q.intake.argument.ArgumentException;
-import com.sk89q.intake.argument.ArgumentParseException;
-import com.sk89q.intake.argument.Arguments;
-import com.sk89q.intake.argument.CommandArgs;
-import com.sk89q.intake.argument.CommandContext;
-import com.sk89q.intake.argument.MissingArgumentException;
-import com.sk89q.intake.argument.Namespace;
-import com.sk89q.intake.argument.UnusedArgumentException;
+import com.sk89q.intake.argument.*;
 import com.sk89q.intake.parametric.handler.ExceptionConverter;
-import com.sk89q.intake.parametric.handler.InvokeHandler;
-import com.sk89q.intake.parametric.handler.InvokeListener;
 import com.sk89q.intake.parametric.intercept.InterceptionCase;
-import com.sk89q.intake.parametric.intercept.Interceptor;
 import com.sk89q.intake.util.auth.AuthorizationException;
+
 import java.lang.annotation.Annotation;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * A base class for commands that use {@link ArgumentParser}.
@@ -173,31 +163,13 @@ public abstract class AbstractParametricCallable implements CommandCallable {
     String[] split = CommandContext.split(calledCommand + " " + stringArguments);
     CommandContext context = new CommandContext(split, parser.getValueFlags(), false, namespace);
     final CommandArgs commandArgs = Arguments.viewOf(context);
-    List<InvokeHandler> handlers = new ArrayList<>();
 
     // Provide help if -? is specified
     if (context.hasFlag('?')) {
       throw new InvalidUsageException(null, this, parentCommands, true);
     }
 
-    for (InvokeListener listener : builder.getInvokeListeners()) {
-      InvokeHandler handler = listener.createInvokeHandler();
-      handlers.add(handler);
-    }
-
     try {
-      boolean invoke = true;
-
-      // preProcess
-      for (InvokeHandler handler : handlers) {
-        if (!handler.preProcess(commandAnnotations, parser, commandArgs)) {
-          invoke = false;
-        }
-      }
-
-      if (!invoke) {
-        return true; // Abort early
-      }
 
       namespace.put(CommandArgs.class, commandArgs);
 
@@ -210,17 +182,6 @@ public abstract class AbstractParametricCallable implements CommandCallable {
 
       final Object[] args = parser.parseArguments(commandArgs, ignoreUnusedFlags, unusedFlags);
 
-      // preInvoke
-      for (InvokeHandler handler : handlers) {
-        if (!handler.preInvoke(commandAnnotations, parser, args, commandArgs)) {
-          invoke = false;
-        }
-      }
-
-      if (!invoke) {
-        return true; // Abort early
-      }
-
       // invoke
       try {
         builder.getCommandExecutor().submit(() -> {
@@ -229,11 +190,6 @@ public abstract class AbstractParametricCallable implements CommandCallable {
         }, commandArgs).get();
       } catch (ExecutionException e) {
         throw e.getCause();
-      }
-
-      // postInvoke
-      for (InvokeHandler handler : handlers) {
-        handler.postInvoke(commandAnnotations, parser, args, commandArgs);
       }
 
     } catch (MissingArgumentException e) {

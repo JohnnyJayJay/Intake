@@ -4,8 +4,7 @@ import com.sk89q.intake.argument.CommandContext;
 import java.lang.annotation.Annotation;
 
 /**
- * An interface that can be used to intercept in command invocations based on annotations
- * as an alternative to {@link com.sk89q.intake.parametric.handler.InvokeListener}.
+ * An interface that can be used to intercept in command invocations based on annotations.
  *
  * The generic type represents the annotation type this interceptor is bound to.
  *

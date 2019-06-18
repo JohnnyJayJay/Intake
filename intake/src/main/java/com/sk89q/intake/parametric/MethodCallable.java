@@ -19,20 +19,12 @@
 
 package com.sk89q.intake.parametric;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Chars;
-import com.sk89q.intake.Command;
-import com.sk89q.intake.CommandCallable;
-import com.sk89q.intake.Description;
-import com.sk89q.intake.ImmutableDescription;
-import com.sk89q.intake.InvocationCommandException;
-import com.sk89q.intake.Require;
+import com.sk89q.intake.*;
 import com.sk89q.intake.argument.Namespace;
-import com.sk89q.intake.parametric.handler.InvokeListener;
 import com.sk89q.intake.parametric.intercept.InterceptionCase;
 import com.sk89q.intake.parametric.intercept.Interceptor;
 
@@ -43,6 +35,8 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * The implementation of a {@link CommandCallable} for the {@link ParametricBuilder}.
@@ -144,10 +138,6 @@ final class MethodCallable extends AbstractParametricCallable {
     if (permHint != null) {
       descBuilder.setPermissions(Arrays.asList(permHint.value()));
       permissions = Arrays.asList(permHint.value());
-    }
-
-    for (InvokeListener listener : builder.getInvokeListeners()) {
-      listener.updateDescription(commandAnnotations, parser, descBuilder);
     }
 
     Description description = descBuilder.build();

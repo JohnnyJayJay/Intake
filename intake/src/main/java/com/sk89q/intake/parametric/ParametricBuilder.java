@@ -19,8 +19,6 @@
 
 package com.sk89q.intake.parametric;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.sk89q.intake.Command;
@@ -30,13 +28,14 @@ import com.sk89q.intake.completion.CommandCompleter;
 import com.sk89q.intake.completion.NullCompleter;
 import com.sk89q.intake.dispatcher.Dispatcher;
 import com.sk89q.intake.parametric.handler.ExceptionConverter;
-import com.sk89q.intake.parametric.handler.InvokeHandler;
-import com.sk89q.intake.parametric.handler.InvokeListener;
 import com.sk89q.intake.util.auth.Authorizer;
 import com.sk89q.intake.util.auth.NullAuthorizer;
+
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Keeps a mapping of types to bindings and generates commands from classes with appropriate
