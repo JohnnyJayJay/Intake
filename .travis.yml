@@ -5,4 +5,4 @@ install: true
 matrix:
   include:
     - jdk: oraclejdk11
-      script: mvn clean package
+      script: ./gradlew clean build --debug
