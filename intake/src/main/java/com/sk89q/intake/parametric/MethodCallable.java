@@ -109,7 +109,7 @@ final class MethodCallable extends AbstractParametricCallable {
     Injector injector = builder.getInjector();
     List<InterceptionCase<?>> interceptionCases = Lists.newArrayList();
     for (Annotation annotation : commandAnnotations) {
-      Interceptor interceptor = injector.getInterceptor(annotation.getClass());
+      Interceptor interceptor = injector.getInterceptor(annotation.annotationType());
       if (interceptor != null) {
         @SuppressWarnings("unchecked") // interceptor always has the correct annotation type because of the injector
         InterceptionCase interceptionCase = new InterceptionCase(interceptor, annotation);

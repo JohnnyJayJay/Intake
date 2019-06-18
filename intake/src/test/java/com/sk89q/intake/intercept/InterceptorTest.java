@@ -44,7 +44,6 @@ public class InterceptorTest {
     executed = false;
   }
 
-  // TODO: 17.06.2019 failing test
   @Test
   public void testAbortedCommand() {
     this.call(ABORTED_COMMAND_NAME);
