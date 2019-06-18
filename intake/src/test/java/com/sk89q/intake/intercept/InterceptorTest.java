@@ -11,7 +11,6 @@ import com.sk89q.intake.dispatcher.SimpleDispatcher;
 import com.sk89q.intake.parametric.Injector;
 import com.sk89q.intake.parametric.ParametricBuilder;
 import com.sk89q.intake.parametric.intercept.Interceptor;
-import com.sk89q.intake.util.auth.AuthorizationException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,7 +58,7 @@ public class InterceptorTest {
   private void call(String command) {
     try {
       dispatcher.call(command, new Namespace(), Collections.singletonList(command));
-    } catch (CommandException | InvocationCommandException | AuthorizationException e) {
+    } catch (CommandException | InvocationCommandException e) {
       Assert.fail("No exception expected");
     }
   }

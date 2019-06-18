@@ -22,29 +22,12 @@ package com.sk89q.intake.dispatcher;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.sk89q.intake.CommandCallable;
-import com.sk89q.intake.CommandException;
-import com.sk89q.intake.CommandMapping;
-import com.sk89q.intake.Description;
-import com.sk89q.intake.ImmutableCommandMapping;
-import com.sk89q.intake.ImmutableDescription;
-import com.sk89q.intake.ImmutableParameter;
-import com.sk89q.intake.InvalidUsageException;
-import com.sk89q.intake.InvocationCommandException;
-import com.sk89q.intake.OptionType;
-import com.sk89q.intake.Parameter;
+import com.sk89q.intake.*;
 import com.sk89q.intake.argument.CommandContext;
 import com.sk89q.intake.argument.Namespace;
 import com.sk89q.intake.parametric.intercept.InterceptionCase;
-import com.sk89q.intake.util.auth.AuthorizationException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
+import java.util.*;
 
 /**
  * A simple implementation of {@link Dispatcher}.
@@ -128,11 +111,7 @@ public class SimpleDispatcher implements Dispatcher {
 
   @Override
   public boolean call(String arguments, Namespace namespace, List<String> parentCommands)
-      throws CommandException, InvocationCommandException, AuthorizationException {
-    // We have permission for this command if we have permissions for subcommands
-    if (!testPermission(namespace)) {
-      throw new AuthorizationException();
-    }
+      throws CommandException, InvocationCommandException {
 
     String[] split = CommandContext.split(arguments);
     Set<String> aliases = getPrimaryAliases();
@@ -149,8 +128,6 @@ public class SimpleDispatcher implements Dispatcher {
       if (mapping != null) {
         try {
           mapping.getCallable().call(subArguments, namespace, subParents);
-        } catch (AuthorizationException e) {
-          throw e;
         } catch (CommandException e) {
           throw e;
         } catch (InvocationCommandException e) {
@@ -177,12 +154,10 @@ public class SimpleDispatcher implements Dispatcher {
       List<String> suggestions = new ArrayList<String>();
 
       for (CommandMapping mapping : getCommands()) {
-        if (mapping.getCallable().testPermission(locals)) {
-          for (String alias : mapping.getAllAliases()) {
-            if (prefix.isEmpty() || alias.startsWith(arguments)) {
-              suggestions.add(mapping.getPrimaryAlias());
-              break;
-            }
+        for (String alias : mapping.getAllAliases()) {
+          if (prefix.isEmpty() || alias.startsWith(arguments)) {
+            suggestions.add(mapping.getPrimaryAlias());
+            break;
           }
         }
       }
@@ -204,17 +179,6 @@ public class SimpleDispatcher implements Dispatcher {
   @Override
   public Description getDescription() {
     return description;
-  }
-
-  @Override
-  public boolean testPermission(Namespace locals) {
-    for (CommandMapping mapping : getCommands()) {
-      if (mapping.getCallable().testPermission(locals)) {
-        return true;
-      }
-    }
-
-    return false;
   }
 
   @Override

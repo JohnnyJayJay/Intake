@@ -46,16 +46,14 @@ final class MethodCallable extends AbstractParametricCallable {
   private final Object object;
   private final Method method;
   private final Description description;
-  private final List<String> permissions;
 
   private MethodCallable(ParametricBuilder builder, ArgumentParser parser, Object object,
-                         Method method, Description description, List<String> permissions,
+                         Method method, Description description,
                          List<InterceptionCase<?>> interceptionCases) {
     super(builder, parser, interceptionCases);
     this.object = object;
     this.method = method;
     this.description = description;
-    this.permissions = permissions;
   }
 
   @Override
@@ -76,21 +74,6 @@ final class MethodCallable extends AbstractParametricCallable {
   @Override
   public Description getDescription() {
     return description;
-  }
-
-  @Override
-  public boolean testPermission(Namespace namespace) {
-    if (permissions != null) {
-      for (String perm : permissions) {
-        if (getBuilder().getAuthorizer().testPermission(namespace, perm)) {
-          return true;
-        }
-      }
-
-      return false;
-    } else {
-      return true;
-    }
   }
 
   static MethodCallable create(ParametricBuilder builder, Object object, Method method)
@@ -133,17 +116,9 @@ final class MethodCallable extends AbstractParametricCallable {
         .setHelp(!definition.help().isEmpty() ? definition.help() : null)
         .setUsageOverride(!definition.usage().isEmpty() ? definition.usage() : null);
 
-    Require permHint = method.getAnnotation(Require.class);
-    List<String> permissions = null;
-    if (permHint != null) {
-      descBuilder.setPermissions(Arrays.asList(permHint.value()));
-      permissions = Arrays.asList(permHint.value());
-    }
-
     Description description = descBuilder.build();
 
-    MethodCallable callable = new MethodCallable(builder, parser, object, method, description,
-        permissions, interceptionCases);
+    MethodCallable callable = new MethodCallable(builder, parser, object, method, description, interceptionCases);
     callable.setCommandAnnotations(ImmutableList.copyOf(method.getAnnotations()));
     callable.setIgnoreUnusedFlags(ignoreUnusedFlags);
     callable.setUnusedFlags(unusedFlags);

@@ -28,7 +28,6 @@ import com.sk89q.intake.InvocationCommandException;
 import com.sk89q.intake.argument.*;
 import com.sk89q.intake.parametric.handler.ExceptionConverter;
 import com.sk89q.intake.parametric.intercept.InterceptionCase;
-import com.sk89q.intake.util.auth.AuthorizationException;
 
 import java.lang.annotation.Annotation;
 import java.util.Collections;
@@ -152,11 +151,7 @@ public abstract class AbstractParametricCallable implements CommandCallable {
   @Override
   public final boolean call(String stringArguments, Namespace namespace,
       List<String> parentCommands)
-      throws CommandException, InvocationCommandException, AuthorizationException {
-    // Test permission
-    if (!testPermission(namespace)) {
-      throw new AuthorizationException();
-    }
+      throws CommandException, InvocationCommandException {
 
     String calledCommand =
         !parentCommands.isEmpty() ? parentCommands.get(parentCommands.size() - 1) : "_";

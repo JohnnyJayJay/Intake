@@ -22,8 +22,7 @@ package com.sk89q.intake;
 import com.sk89q.intake.argument.Namespace;
 import com.sk89q.intake.completion.CommandCompleter;
 import com.sk89q.intake.parametric.intercept.InterceptionCase;
-import com.sk89q.intake.parametric.intercept.Interceptor;
-import com.sk89q.intake.util.auth.AuthorizationException;
+
 import java.util.List;
 
 /**
@@ -58,10 +57,9 @@ public interface CommandCallable extends CommandCompleter {
    * @return Whether the command succeeded
    * @throws CommandException If there is an error with the command
    * @throws InvocationCommandException If there is an error with executing the command
-   * @throws AuthorizationException If there is a authorization error
    */
   boolean call(String arguments, Namespace namespace, List<String> parentCommands)
-      throws CommandException, InvocationCommandException, AuthorizationException;
+      throws CommandException, InvocationCommandException;
 
   /**
    * Get the object describing the command.
@@ -69,14 +67,6 @@ public interface CommandCallable extends CommandCompleter {
    * @return The object describing the command
    */
   Description getDescription();
-
-  /**
-   * Test whether the user is permitted to use the command.
-   *
-   * @param namespace The namespace
-   * @return Whether permission is provided
-   */
-  boolean testPermission(Namespace namespace);
 
   /**
    * Get a list of all {@link InterceptionCase interception cases} associated with this CommandCallable

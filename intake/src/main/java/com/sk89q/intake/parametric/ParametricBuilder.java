@@ -28,8 +28,6 @@ import com.sk89q.intake.completion.CommandCompleter;
 import com.sk89q.intake.completion.NullCompleter;
 import com.sk89q.intake.dispatcher.Dispatcher;
 import com.sk89q.intake.parametric.handler.ExceptionConverter;
-import com.sk89q.intake.util.auth.Authorizer;
-import com.sk89q.intake.util.auth.NullAuthorizer;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -45,7 +43,6 @@ public class ParametricBuilder {
 
   private final Injector injector;
   private final List<ExceptionConverter> exceptionConverters = Lists.newArrayList();
-  private Authorizer authorizer = new NullAuthorizer();
   private CommandCompleter defaultCompleter = new NullCompleter();
   private CommandExecutor commandExecutor = new CommandExecutorWrapper(
       MoreExecutors.newDirectExecutorService());
@@ -150,25 +147,6 @@ public class ParametricBuilder {
    */
   List<ExceptionConverter> getExceptionConverters() {
     return exceptionConverters;
-  }
-
-  /**
-   * Get the authorizer.
-   *
-   * @return The authorizer
-   */
-  public Authorizer getAuthorizer() {
-    return authorizer;
-  }
-
-  /**
-   * Set the authorizer.
-   *
-   * @param authorizer The authorizer
-   */
-  public void setAuthorizer(Authorizer authorizer) {
-    checkNotNull(authorizer);
-    this.authorizer = authorizer;
   }
 
   /**
