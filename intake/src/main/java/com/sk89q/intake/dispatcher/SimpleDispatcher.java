@@ -22,12 +22,29 @@ package com.sk89q.intake.dispatcher;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.sk89q.intake.*;
+import com.sk89q.intake.CommandCallable;
+import com.sk89q.intake.CommandException;
+import com.sk89q.intake.CommandMapping;
+import com.sk89q.intake.Description;
+import com.sk89q.intake.ImmutableCommandMapping;
+import com.sk89q.intake.ImmutableDescription;
+import com.sk89q.intake.ImmutableParameter;
+import com.sk89q.intake.InvalidUsageException;
+import com.sk89q.intake.InvocationCommandException;
+import com.sk89q.intake.OptionType;
+import com.sk89q.intake.Parameter;
 import com.sk89q.intake.argument.CommandContext;
 import com.sk89q.intake.argument.Namespace;
 import com.sk89q.intake.parametric.intercept.InterceptionCase;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * A simple implementation of {@link Dispatcher}.

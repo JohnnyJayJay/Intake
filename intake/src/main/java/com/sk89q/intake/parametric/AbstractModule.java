@@ -25,6 +25,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.sk89q.intake.parametric.binder.Binder;
 import com.sk89q.intake.parametric.binder.BindingBuilder;
 import com.sk89q.intake.parametric.binder.InterceptorBindingBuilder;
+import com.sk89q.intake.parametric.intercept.Interceptor;
 
 import java.lang.annotation.Annotation;
 
@@ -57,7 +58,7 @@ public abstract class AbstractModule implements Module {
     return getBinder().bind(key);
   }
 
-  public <T extends Annotation> InterceptorBindingBuilder<T> interceptAt(Class<T> annotation) {
-    return getBinder().interceptAt(annotation);
+  public <T extends Annotation> InterceptorBindingBuilder<T> interceptWith(Interceptor<T> interceptor) {
+    return getBinder().interceptWith(interceptor);
   }
 }

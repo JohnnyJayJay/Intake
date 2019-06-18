@@ -25,6 +25,8 @@ import com.sk89q.intake.parametric.Key;
 import com.sk89q.intake.parametric.binder.Binder;
 import com.sk89q.intake.parametric.binder.BindingBuilder;
 import com.sk89q.intake.parametric.binder.InterceptorBindingBuilder;
+import com.sk89q.intake.parametric.intercept.Interceptor;
+
 import java.lang.annotation.Annotation;
 
 class InternalBinder implements Binder {
@@ -51,8 +53,8 @@ class InternalBinder implements Binder {
   }
 
   @Override
-  public <T extends Annotation> InterceptorBindingBuilder<T> interceptAt(Class<T> annotation) {
-    return new InternalInterceptorBindingBuilder<>(interceptorList, annotation);
+  public <T extends Annotation> InterceptorBindingBuilder<T> interceptWith(Interceptor<T> interceptor) {
+    return new InternalInterceptorBindingBuilder<>(interceptorList, interceptor);
   }
 
 }

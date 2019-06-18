@@ -69,7 +69,8 @@ public interface CommandCallable extends CommandCompleter {
   Description getDescription();
 
   /**
-   * Get a list of all {@link InterceptionCase interception cases} associated with this CommandCallable
+   * Get a list of all {@link InterceptionCase interception cases}
+   * associated with this CommandCallable.
    *
    * @return a list of {@link InterceptionCase}
    */

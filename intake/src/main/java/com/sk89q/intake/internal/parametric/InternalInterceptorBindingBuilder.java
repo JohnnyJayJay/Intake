@@ -14,15 +14,15 @@ final class InternalInterceptorBindingBuilder<T extends Annotation> implements
     InterceptorBindingBuilder<T> {
 
   private final InterceptorList interceptorList;
-  private final Class<T> annotation;
+  private final Interceptor<T> interceptor;
 
-  InternalInterceptorBindingBuilder(InterceptorList interceptorList, Class<T> annotation) {
+  InternalInterceptorBindingBuilder(InterceptorList interceptorList, Interceptor<T> interceptor) {
     this.interceptorList = interceptorList;
-    this.annotation = annotation;
+    this.interceptor = interceptor;
   }
 
   @Override
-  public void using(Interceptor<T> interceptor) {
+  public void at(Class<T> annotation) {
     interceptorList.addInterceptor(annotation, interceptor);
   }
 }

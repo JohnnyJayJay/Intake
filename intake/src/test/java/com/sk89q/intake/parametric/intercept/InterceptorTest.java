@@ -34,7 +34,7 @@ public class InterceptorTest {
   @Before
   public void setUp() {
     Injector injector = Intake.createInjector();
-    injector.install((binder) -> binder.interceptAt(SampleIntercept.class).using(new SampleInterceptor()));
+    injector.install((binder) -> binder.interceptWith(new SampleInterceptor()).at(SampleIntercept.class));
     ParametricBuilder builder = new ParametricBuilder(injector);
     Dispatcher dispatcher = new SimpleDispatcher();
     builder.registerMethodsAsCommands(dispatcher, this);

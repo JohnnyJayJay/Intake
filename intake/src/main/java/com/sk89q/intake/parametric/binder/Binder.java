@@ -21,6 +21,8 @@ package com.sk89q.intake.parametric.binder;
 
 import com.sk89q.intake.parametric.AbstractModule;
 import com.sk89q.intake.parametric.Key;
+import com.sk89q.intake.parametric.intercept.Interceptor;
+
 import java.lang.annotation.Annotation;
 
 /**
@@ -52,5 +54,5 @@ public interface Binder {
   /**
    * Start a binding of a Annotation
    */
-  <T extends Annotation> InterceptorBindingBuilder<T> interceptAt(Class<T> annotation);
+  <T extends Annotation> InterceptorBindingBuilder<T> interceptWith(Interceptor<T> interceptor);
 }

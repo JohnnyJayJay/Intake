@@ -18,7 +18,7 @@ public class InterceptionCase<T extends Annotation> {
   private final T annotation;
 
   /**
-   * Constructs a new instance of InterceptionCase
+   * Constructs a new instance of InterceptionCase.
    *
    * @param interceptor The interceptor to call when intercepting.
    * @param annotation The annotation instance on the command method.
@@ -29,16 +29,20 @@ public class InterceptionCase<T extends Annotation> {
   }
 
   /**
-   * Intercepts a command invocation in a specific CommandContext using the interceptor and the annotation this instance holds.
+   * Intercepts a command invocation in a specific CommandContext using the interceptor
+   * and the annotation this instance holds.
    *
    * @param context The context in which the command will be executed.
-   * @return {@code true}, if the invocation may proceed; {@code false}, if the invocation should be aborted.
+   * @return {@code true}, if the invocation may proceed; {@code false},
+   *         if the invocation should be aborted.
    */
   public boolean intercept(CommandContext context) {
     return interceptor.intercept(context, annotation);
   }
 
   /**
+   * Returns the annotation instance this InterceptionCase holds.
+   *
    * @return The annotation in this InterceptionCase.
    */
   public T getAnnotation() {
@@ -46,6 +50,8 @@ public class InterceptionCase<T extends Annotation> {
   }
 
   /**
+   * Returns the Interceptor this InterceptionCase holds.
+   *
    * @return The Interceptor in this InterceptionCase.
    */
   public Interceptor<T> getInterceptor() {

@@ -14,5 +14,5 @@ public interface InterceptorBindingBuilder<T extends Annotation> {
   /**
    * Binds a {@link Interceptor} to a specific annotation.
    */
-  void using(Interceptor<T> interceptor);
+  void at(Class<T> annotation);
 }
