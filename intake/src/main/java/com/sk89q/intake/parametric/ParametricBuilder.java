@@ -45,7 +45,6 @@ import java.util.concurrent.ExecutorService;
 public class ParametricBuilder {
 
   private final Injector injector;
-  private final List<InvokeListener> invokeListeners = Lists.newArrayList();
   private final List<ExceptionConverter> exceptionConverters = Lists.newArrayList();
   private Authorizer authorizer = new NullAuthorizer();
   private CommandCompleter defaultCompleter = new NullCompleter();
@@ -58,22 +57,6 @@ public class ParametricBuilder {
 
   public Injector getInjector() {
     return injector;
-  }
-
-  /**
-   * Attach an invocation listener.
-   *
-   * <p>Invocation handlers are called in order that their listeners are
-   * registered with a ParametricBuilder. It is not guaranteed that a listener may be called, in the
-   * case of a {@link CommandException} being thrown at any time before the appropriate listener or
-   * handler is called.
-   *
-   * @param listener The listener
-   * @see InvokeHandler tThe handler
-   */
-  public void addInvokeListener(InvokeListener listener) {
-    checkNotNull(listener);
-    invokeListeners.add(listener);
   }
 
   /**
@@ -159,15 +142,6 @@ public class ParametricBuilder {
    */
   public CommandCallable build(Object object, Method method) throws ParametricException {
     return MethodCallable.create(this, object, method);
-  }
-
-  /**
-   * Get a list of invocation listeners.
-   *
-   * @return A list of invocation listeners
-   */
-  List<InvokeListener> getInvokeListeners() {
-    return invokeListeners;
   }
 
   /**
