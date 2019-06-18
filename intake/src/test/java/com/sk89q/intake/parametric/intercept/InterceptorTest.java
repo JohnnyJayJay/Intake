@@ -1,4 +1,4 @@
-package com.sk89q.intake.intercept;
+package com.sk89q.intake.parametric.intercept;
 
 import com.sk89q.intake.Command;
 import com.sk89q.intake.CommandException;
@@ -10,7 +10,6 @@ import com.sk89q.intake.dispatcher.Dispatcher;
 import com.sk89q.intake.dispatcher.SimpleDispatcher;
 import com.sk89q.intake.parametric.Injector;
 import com.sk89q.intake.parametric.ParametricBuilder;
-import com.sk89q.intake.parametric.intercept.Interceptor;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

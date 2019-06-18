@@ -5,4 +5,4 @@ install: true
 matrix:
   include:
     - jdk: oraclejdk11
-      script: ./gradlew clean build --debug
+      script: ./gradlew clean build --stacktrace
